@@ -9,9 +9,6 @@ param location string
 @description('The VNET configuration (hub and spoke)')
 param vnetConfiguration object
 
-@description('The suffix to use for deployment')
-param suffix string = 'hg29'
-
 var hubRgName = 'rg-hub-ase-demo'
 var spokeRgName = 'rg-spoke-ase-demo'
 
