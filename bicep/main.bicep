@@ -40,13 +40,20 @@ module vnetSpoke 'modules/networking/vnet.bicep' = {
   }
 }
 
-module peering 'modules/networking/peering.bicep' = {
+module peeringhub 'modules/networking/peering.bicep' = {
   scope: resourceGroup(hubRg.name)
-  name: 'peering'
+  name: 'peeringhub'
   params: {
-    hubName: vnetHub.outputs.vnetName
-    hubVnetId: vnetHub.outputs.vnetId
-    spokeName: vnetSpoke.outputs.vnetName    
-    spokeVnetId: vnetSpoke.outputs.vnetId
+    peeringName: '${vnetHub.outputs.vnetName}/hub-to-spoke'
+    remoteVnetId: vnetSpoke.outputs.vnetId
+  }
+}
+
+module peeringspoke 'modules/networking/peering.bicep' = {
+  scope: resourceGroup(spokeRg.name)
+  name: 'peeringspoke'
+  params: {
+    peeringName: '${vnetSpoke.outputs.vnetName}/spoke-to-hub'
+    remoteVnetId: vnetHub.outputs.vnetId
   }
 }

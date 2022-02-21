@@ -1,30 +1,28 @@
-param hubVnetId string
-param hubName string
-param spokeVnetId string
-param spokeName string
+param peeringName string
+param remoteVnetId string
 
 resource hubToSpoke 'Microsoft.Network/virtualNetworks/virtualNetworkPeerings@2021-05-01' = {
-  name: '${hubName}/hub-to-spoke'
+  name: peeringName
   properties: {
     allowVirtualNetworkAccess: true
     allowForwardedTraffic: true
     allowGatewayTransit: false
     useRemoteGateways: false
     remoteVirtualNetwork: {
-      id: spokeVnetId
+      id: remoteVnetId
     }
   }
 }
 
-resource spokeToHub 'Microsoft.Network/virtualNetworks/virtualNetworkPeerings@2021-05-01' = {
-  name: '${spokeName}/spoke-to-hub'
-  properties: {
-    allowVirtualNetworkAccess: true
-    allowForwardedTraffic: true
-    allowGatewayTransit: false
-    useRemoteGateways: false
-    remoteVirtualNetwork: {
-      id: hubVnetId
-    }
-  }
-}
+// resource spokeToHub 'Microsoft.Network/virtualNetworks/virtualNetworkPeerings@2021-05-01' = {
+//   name: '${spokeName}/spoke-to-hub'
+//   properties: {
+//     allowVirtualNetworkAccess: true
+//     allowForwardedTraffic: true
+//     allowGatewayTransit: false
+//     useRemoteGateways: false
+//     remoteVirtualNetwork: {
+//       id: hubVnetId
+//     }
+//   }
+// }
