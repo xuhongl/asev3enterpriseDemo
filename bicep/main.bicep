@@ -12,6 +12,8 @@ param vnetConfiguration object
 var hubRgName = 'rg-hub-ase-demo'
 var spokeRgName = 'rg-spoke-ase-demo'
 
+var hubSuffix = uniqueString(hubRg.id)
+
 resource hubRg 'Microsoft.Resources/resourceGroups@2021-04-01' = {
   name: hubRgName
   location: location
@@ -55,5 +57,20 @@ module peeringspoke 'modules/networking/peering.bicep' = {
   params: {
     peeringName: '${vnetSpoke.outputs.vnetName}/spoke-to-hub'
     remoteVnetId: vnetHub.outputs.vnetId
+  }
+}
+
+resource subnetFirewall 'Microsoft.Network/virtualNetworks/subnets@2021-05-01' existing = {
+  name: vnetConfiguration.hub.subnets[0].name
+  scope: resourceGroup(hubRg.name)  
+}
+
+module firewall 'modules/firewall/firewall.bicep' = {
+  scope: resourceGroup(hubRg.name)  
+  name: 'firewall'
+  params: {
+    location: location
+    subnetId: subnetFirewall.id
+    suffix: hubSuffix
   }
 }
