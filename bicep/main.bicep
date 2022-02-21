@@ -13,6 +13,7 @@ var hubRgName = 'rg-hub-ase-demo'
 var spokeRgName = 'rg-spoke-ase-demo'
 
 var hubsuffix = uniqueString(hubRg.id)
+var spokeSuffix = uniqueString(spokeRg.id)
 
 resource hubRg 'Microsoft.Resources/resourceGroups@2021-04-01' = {
   name: hubRgName
@@ -67,5 +68,15 @@ module firewall 'modules/firewall/firewall.bicep' = {
     location: location
     subnetId: vnetHub.outputs.subnets[0].id
     suffix: hubsuffix
+  }
+}
+
+module ase 'modules/ase/ase.bicep' = {
+  scope: resourceGroup(spokeRg.name)
+  name: 'ase'
+  params: {
+    location: location
+    subnetId: vnetSpoke.outputs.subnets[0].id
+    suffix: spokeSuffix
   }
 }

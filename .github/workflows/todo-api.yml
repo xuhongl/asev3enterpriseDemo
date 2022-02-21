@@ -1,4 +1,4 @@
-name: Deploy Weather Api
+name: Deploy Todo Api
 
 on:
   workflow_dispatch:
