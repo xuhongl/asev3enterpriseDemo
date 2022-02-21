@@ -7,38 +7,7 @@ param location string
 param externalAse bool
 
 @description('The VNET configuration (hub and spoke)')
-param vnetConfiguration object = {
-  hub: {
-    name: 'vnet-hub'
-    addressPrefixe: '10.0.0.0/16'
-    subnets: [
-      {
-        name: 'AzureFirewallSubnet'
-        properties: {
-          addressPrefix: '10.0.1.0/24'
-        }          
-      }
-      {
-        name: 'snet-jumpbox'
-        properties: {
-          addressPrefix: '10.0.2.0/24'
-        }          
-      }         
-    ]
-  }
-  spoke: {
-    name: 'vnet-spoke'
-    addressPrefixe: '10.1.0.0/16'
-    subnets: [
-      {
-        name: 'snet-ase'
-        properties: {
-          addressPrefix: '10.0.1.0/24'
-        }        
-      }
-    ]    
-  }
-}
+param vnetConfiguration object
 
 var hubRgName = 'rg-hub-ase-demo'
 var spokeRgName = 'rg-spoke-ase-demo'
