@@ -5,6 +5,10 @@ param subnetId string
 resource pip 'Microsoft.Network/publicIPAddresses@2021-05-01' = {
   name: 'pip-fw-${suffix}'
   location: location
+  properties: {
+    publicIPAllocationMethod: 'Static'
+    publicIPAddressVersion: 'IPv4'
+  }
   sku: {
     name: 'Standard'
     tier: 'Regional'
