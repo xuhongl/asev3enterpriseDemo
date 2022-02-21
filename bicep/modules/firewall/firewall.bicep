@@ -3,7 +3,7 @@ param suffix string
 param subnetId string
 
 resource pip 'Microsoft.Network/publicIPAddresses@2021-05-01' = {
-  name: 'pipfw${suffix}'
+  name: 'pip-fw-${suffix}'
   location: location
   properties: {
     publicIPAllocationMethod: 'Static'
@@ -16,7 +16,7 @@ resource pip 'Microsoft.Network/publicIPAddresses@2021-05-01' = {
 }
 
 resource firewallPolicies 'Microsoft.Network/firewallPolicies@2021-05-01' = {
-  name: 'fwpolicy${suffix}'
+  name: 'fw-policy-${suffix}'
   location: location
   properties: {
     sku: {
@@ -27,12 +27,12 @@ resource firewallPolicies 'Microsoft.Network/firewallPolicies@2021-05-01' = {
 }
 
 resource firewall 'Microsoft.Network/azureFirewalls@2021-05-01' = {
-  name: 'fw${suffix}'
+  name: 'fw-${suffix}'
   location: location
   properties: {
     ipConfigurations: [
       {
-        name: ''
+        name: 'ipconfig'
         properties: {
           subnet: {
             id: subnetId

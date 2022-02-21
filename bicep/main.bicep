@@ -15,7 +15,7 @@ param suffix string = 'hg29'
 var hubRgName = 'rg-hub-ase-demo'
 var spokeRgName = 'rg-spoke-ase-demo'
 
-
+var hubsuffix = uniqueString(hubRg.id)
 
 resource hubRg 'Microsoft.Resources/resourceGroups@2021-04-01' = {
   name: hubRgName
@@ -69,6 +69,6 @@ module firewall 'modules/firewall/firewall.bicep' = {
   params: {
     location: location
     subnetId: vnetHub.outputs.subnets[0].id
-    suffix: suffix
+    suffix: hubsuffix
   }
 }
