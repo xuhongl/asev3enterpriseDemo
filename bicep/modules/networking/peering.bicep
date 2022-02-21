@@ -4,7 +4,7 @@ param spokeVnetId string
 param spokeName string
 
 resource hubToSpoke 'Microsoft.Network/virtualNetworks/virtualNetworkPeerings@2021-05-01' = {
-  name: '${hubName}/to-${spokeName}'
+  name: '${hubName}/hub-to-spoke'
   properties: {
     allowVirtualNetworkAccess: true
     allowForwardedTraffic: true
@@ -17,7 +17,7 @@ resource hubToSpoke 'Microsoft.Network/virtualNetworks/virtualNetworkPeerings@20
 }
 
 resource spokeToHub 'Microsoft.Network/virtualNetworks/virtualNetworkPeerings@2021-05-01' = {
-  name: '${spokeName}/to-${hubToSpoke}'
+  name: '${spokeName}/spoke-to-hub'
   properties: {
     allowVirtualNetworkAccess: true
     allowForwardedTraffic: true
