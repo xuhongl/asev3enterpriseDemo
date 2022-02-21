@@ -3,8 +3,8 @@ targetScope='subscription'
 @description('The location where the resources will be deployed')
 param location string
 
-@description('If the ASE is external or not')
-param externalAse bool
+// @description('If the ASE is external or not')
+// param externalAse bool
 
 @description('The VNET configuration (hub and spoke)')
 param vnetConfiguration object
