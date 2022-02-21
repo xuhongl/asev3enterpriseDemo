@@ -32,8 +32,18 @@
                   {
                     "name": "snet-ase",
                     "properties": {
-                      "addressPrefix": "10.1.1.0/24"
-                    }
+                      "addressPrefix": "10.1.1.0/24",
+                      "delegations": [
+                        {
+                          "name": "ase3-delegation",
+                          "properties": {
+                            "serviceName": "Microsoft.Web/hostingEnvironments"
+                          }
+                        }                        
+                      ],
+                      "privateEndpointNetworkPolicies": "Enabled",
+                      "privateLinkServiceNetworkPolicies": "Enabled"
+                    }                    
                   }
                 ]
               }
