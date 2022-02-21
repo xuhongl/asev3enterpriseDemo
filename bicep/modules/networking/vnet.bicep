@@ -16,3 +16,4 @@ resource vnet 'Microsoft.Network/virtualNetworks@2021-05-01' = {
 
 output vnetName string = vnet.name
 output vnetId string = vnet.id
+output subnets array = vnet.properties.subnets
