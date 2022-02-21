@@ -5,6 +5,9 @@
         "location": {
             "value": "eastus"
         },
+        "suffix": {
+            "value": "hg29"
+        },
         "vnetConfiguration": {
             "value": {
               "hub": {
