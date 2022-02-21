@@ -30,3 +30,23 @@ module vnetHub 'modules/networking/vnet.bicep' = {
     vnetConfiguration: vnetConfiguration.hub
   }
 }
+
+module vnetSpoke 'modules/networking/vnet.bicep' = {
+  scope: resourceGroup(spokeRg.name)
+  name: 'vnetHub'
+  params: {
+    location: location
+    vnetConfiguration: vnetConfiguration.spoke
+  }
+}
+
+module peering 'modules/networking/peering.bicep' = {
+  scope: resourceGroup(hubRg.name)
+  name: 'peering'
+  params: {
+    hubName: vnetHub.outputs.vnetName
+    hubVnetId: vnetHub.outputs.vnetId
+    spokeName: vnetSpoke.outputs.vnetName    
+    spokeVnetId: vnetSpoke.outputs.vnetId
+  }
+}
