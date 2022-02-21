@@ -60,17 +60,12 @@ module peeringspoke 'modules/networking/peering.bicep' = {
   }
 }
 
-resource subnetFirewall 'Microsoft.Network/virtualNetworks/subnets@2021-05-01' existing = {
-  name: vnetConfiguration.hub.subnets[0].name
-  scope: resourceGroup(hubRg.name)  
-}
-
 module firewall 'modules/firewall/firewall.bicep' = {
   scope: resourceGroup(hubRg.name)  
   name: 'firewall'
   params: {
     location: location
-    subnetId: subnetFirewall.id
+    subnetId: vnetHub.outputs.subnets[0].id
     suffix: hubSuffix
   }
 }
