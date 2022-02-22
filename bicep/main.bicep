@@ -80,3 +80,13 @@ module ase 'modules/ase/ase.bicep' = {
     suffix: spokeSuffix
   }
 }
+
+module appServicePlan 'modules/webapp/appservice.bicep' = {
+  scope: resourceGroup(spokeRg.name)
+  name: 'appServicePlan'
+  params: {
+    aseId: ase.outputs.aseId    
+    location: location
+    suffix: spokeSuffix
+  }
+}

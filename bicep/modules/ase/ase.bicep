@@ -15,3 +15,5 @@ resource ase 'Microsoft.Web/hostingEnvironments@2021-03-01' = {
     zoneRedundant: false   
   }
 }
+
+output aseId string = ase.id
