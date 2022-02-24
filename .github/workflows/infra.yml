@@ -1,10 +1,11 @@
 name: Create Azure Resources
 
 on:
+  workflow_dispatch:
   push:
     branches:
     - main
-
+   
     paths:
     - bicep/**    
     - .github/workflows/infra.yml
