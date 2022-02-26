@@ -8,6 +8,6 @@ resource workspace 'Microsoft.OperationalInsights/workspaces@2021-12-01-preview'
     sku: {
       name: 'PerGB2018'
     }
-    retentionInDays: 7
+    retentionInDays: 30
   }
 }
