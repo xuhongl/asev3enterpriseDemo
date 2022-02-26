@@ -25,3 +25,5 @@ resource aseRouteTable 'Microsoft.Network/routeTables@2021-05-01' = {
     ]
   }
 }
+
+output routeTableId string = aseRouteTable.id

@@ -20,3 +20,5 @@ resource appservice 'Microsoft.Web/serverfarms@2021-03-01' = {
     name: 'I1V2'
   }
 }
+
+output appserviceId string = appservice.id

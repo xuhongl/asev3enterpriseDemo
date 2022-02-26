@@ -101,6 +101,17 @@ module appServicePlan 'modules/webapp/appservice.bicep' = {
   }
 }
 
+module web 'modules/webapp/webapp.bicep' = {
+  scope: resourceGroup(spokeRg.name)
+  name: 'web'
+  params: {
+    appServiceId: appServicePlan.outputs.appserviceId
+    aseId: ase.outputs.aseId
+    location: location
+    suffix: spokeSuffix
+  }
+}
+
 module workspace 'modules/analytics/workspace.bicep' = {
   scope: resourceGroup(hubRg.name)
   name: 'workspace'
@@ -109,3 +120,5 @@ module workspace 'modules/analytics/workspace.bicep' = {
     suffix: hubsuffix
   }
 }
+
+output webAppname string = web.outputs.webappname
