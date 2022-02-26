@@ -17,4 +17,3 @@ resource ase 'Microsoft.Web/hostingEnvironments@2021-03-01' = {
 }
 
 output aseId string = ase.id
-output asePublicIp string = ase.properties.networkingConfiguration.externalInboundIpAddresses[0]

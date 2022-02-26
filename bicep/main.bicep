@@ -109,6 +109,3 @@ module workspace 'modules/analytics/workspace.bicep' = {
     suffix: hubsuffix
   }
 }
-
-
-output asePublicIP string = ase.outputs.asePublicIp
