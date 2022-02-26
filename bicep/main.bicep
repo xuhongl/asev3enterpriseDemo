@@ -81,6 +81,16 @@ module ase 'modules/ase/ase.bicep' = {
   }
 }
 
+module routeTable 'modules/networking/routeTable.bicep' = {
+  scope: resourceGroup(spokeRg.name)
+  name: 'routeTable'
+  params: {
+    fwPrivateIP: firewall.outputs.privateIp
+    fwPublicIP: firewall.outputs.publicIp
+    location: location
+  }
+}
+
 module appServicePlan 'modules/webapp/appservice.bicep' = {
   scope: resourceGroup(spokeRg.name)
   name: 'appServicePlan'
@@ -88,5 +98,14 @@ module appServicePlan 'modules/webapp/appservice.bicep' = {
     aseId: ase.outputs.aseId    
     location: location
     suffix: spokeSuffix
+  }
+}
+
+module workspace 'modules/analytics/workspace.bicep' = {
+  scope: resourceGroup(hubRg.name)
+  name: 'workspace'
+  params: {
+    location: location
+    suffix: hubsuffix
   }
 }

@@ -51,3 +51,6 @@ resource firewall 'Microsoft.Network/azureFirewalls@2021-05-01' = {
     }
   }
 }
+
+output privateIp string = firewall.properties.ipConfigurations[0].properties.privateIPAddress
+output publicIp string = pip.properties.ipAddress
