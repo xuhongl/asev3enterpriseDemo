@@ -5,6 +5,9 @@
         "location": {
             "value": "eastus"
         },
+        "externalAse": {
+           "value": false
+        },
         "vnetConfiguration": {
             "value": {
               "hub": {
