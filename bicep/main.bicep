@@ -3,9 +3,6 @@ targetScope='subscription'
 @description('The location where the resources will be deployed')
 param location string
 
-@description('If the ASE is external or not')
-param externalAse bool
-
 @description('The VNET configuration (hub and spoke)')
 param vnetConfiguration object
 
@@ -78,11 +75,10 @@ module ase 'modules/ase/ase.bicep' = {
     location: location
     subnetId: vnetSpoke.outputs.subnets[0].id
     suffix: spokeSuffix
-    externalAse: externalAse
   }
 }
 
-module dnsZone 'modules/DNS/privatezone.bicep' = if (!externalAse) {
+module dnsZone 'modules/DNS/privatezone.bicep'= {
   scope: resourceGroup(spokeRg.name)
   name: 'dnsZone'
   params: {
