@@ -1,5 +1,6 @@
 param aseName string
-// param vnetId string
+param vnetId string
+param vnetNameSpoke string
 // param asePrivateIp string
 
 resource privateZone 'Microsoft.Network/privateDnsZones@2020-06-01' = {
@@ -7,16 +8,16 @@ resource privateZone 'Microsoft.Network/privateDnsZones@2020-06-01' = {
   location: 'global'  
 }
 
-// resource networkLink 'Microsoft.Network/privateDnsZones/virtualNetworkLinks@2020-06-01' = {
-//   name: '${privateZone.name}/vnetLink'
-//   location: 'global'
-//   properties: {
-//     virtualNetwork: {
-//       id: vnetId
-//     }
-//     registrationEnabled: false
-//   }
-// }
+resource networkLink 'Microsoft.Network/privateDnsZones/virtualNetworkLinks@2020-06-01' = {
+  name: '${privateZone.name}/${vnetNameSpoke}'
+  location: 'global'
+  properties: {
+    virtualNetwork: {
+      id: vnetId
+    }
+    registrationEnabled: false
+  }
+}
 
 // resource aRecordAseAll 'Microsoft.Network/privateDnsZones/A@2020-06-01' = {
 //   name: '${privateZone}/*'
