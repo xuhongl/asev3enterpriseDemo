@@ -1,6 +1,6 @@
 param aseName string
-param vnetId string
-param asePrivateIp string
+// param vnetId string
+// param asePrivateIp string
 
 resource privateZone 'Microsoft.Network/privateDnsZones@2020-06-01' = {
   name: '${aseName}.appserviceenvironment.net'

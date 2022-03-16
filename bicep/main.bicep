@@ -83,8 +83,6 @@ module dnsZone 'modules/DNS/privatezone.bicep'= {
   name: 'dnsZone'
   params: {
     aseName: ase.outputs.aseName
-    asePrivateIp: ase.outputs.asePrivateIp
-    vnetId: vnetSpoke.outputs.vnetName
   }
 }
 
