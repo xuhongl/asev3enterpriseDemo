@@ -108,9 +108,13 @@ module dnsZone 'modules/DNS/privatezone.bicep'= {
   name: 'dnsZone'
   params: {
     aseName: ase.outputs.aseName
-    vnetId: vnetSpoke.outputs.vnetId
+    hubVnetId: vnetHub.outputs.vnetId
     vnetNameSpoke: vnetSpoke.outputs.vnetName
     asePrivateIp: ase.outputs.asePrivateIp
+    privateIpRunner: runner.outputs.privateIps
+    runnerVmName: runner.outputs.vmName
+    spokeVnetId: vnetSpoke.outputs.vnetId
+    vnetNameHub: vnetHub.outputs.vnetName
   }
 }
 

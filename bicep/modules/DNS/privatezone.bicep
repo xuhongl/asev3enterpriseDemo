@@ -1,21 +1,48 @@
 param aseName string
-param vnetId string
+param hubVnetId string
+param spokeVnetId string
 param vnetNameSpoke string
+param vnetNameHub string
 param asePrivateIp string
+param privateIpRunner string
+param runnerVmName string
 
 resource privateZone 'Microsoft.Network/privateDnsZones@2020-06-01' = {
   name: '${aseName}.appserviceenvironment.net'
   location: 'global'  
 }
 
-resource networkLink 'Microsoft.Network/privateDnsZones/virtualNetworkLinks@2020-06-01' = {
+resource networkLinkSpoke 'Microsoft.Network/privateDnsZones/virtualNetworkLinks@2020-06-01' = {
   name: '${privateZone.name}/${vnetNameSpoke}'
   location: 'global'
   properties: {
     virtualNetwork: {
-      id: vnetId
+      id: spokeVnetId
     }
     registrationEnabled: false
+  }
+}
+
+resource networkLinkHub 'Microsoft.Network/privateDnsZones/virtualNetworkLinks@2020-06-01' = {
+  name: '${privateZone.name}/${vnetNameHub}'
+  location: 'global'
+  properties: {
+    virtualNetwork: {
+      id: hubVnetId
+    }
+    registrationEnabled: false
+  }
+}
+
+resource aRecordRunner 'Microsoft.Network/privateDnsZones/A@2020-06-01' = {
+  name: '${privateZone.name}/${runnerVmName}'
+  properties: {
+    ttl: 3600
+    aRecords: [
+      {
+        ipv4Address: privateIpRunner
+      }
+    ]
   }
 }
 
