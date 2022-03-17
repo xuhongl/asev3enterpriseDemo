@@ -1,16 +1,6 @@
 param vnetConfiguration object
 param location string
 
-resource nsgjumpbox 'Microsoft.Network/networkSecurityGroups@2021-05-01' = {
-  name: 'nsg-jumpbox'
-  location: location
-  properties: {
-    securityRules: [
-      
-    ]    
-  }
-}
-
 resource nsgrunner 'Microsoft.Network/networkSecurityGroups@2021-05-01' = {
   name: 'nsg-runner'
   location: location
@@ -41,9 +31,8 @@ resource vnet 'Microsoft.Network/virtualNetworks@2021-05-01' = {
         name: vnetConfiguration.subnets[1].name
         properties: {
           addressPrefix: vnetConfiguration.subnets[1].addressPrefix
-          networkSecurityGroup: {
-            id: nsgjumpbox.id
-          }
+          privateLinkServiceNetworkPolicies: 'Enabled'
+          privateEndpointNetworkPolicies: 'Disabled'
         }
       }
       {
