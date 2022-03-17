@@ -20,7 +20,7 @@ resource networkLink 'Microsoft.Network/privateDnsZones/virtualNetworkLinks@2020
 }
 
 resource aRecordAseAll 'Microsoft.Network/privateDnsZones/A@2020-06-01' = {
-  name: '${privateZone}/*'
+  name: '${privateZone.name}/*'
   properties: {
     ttl: 3600
     aRecords: [
