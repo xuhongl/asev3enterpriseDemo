@@ -32,6 +32,10 @@ jobs:
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
 
+      - name: Convert to ARM
+        run: |
+          bicep build ./bicep/main.bicep 
+
       - name: deploy
         id: createResources
         uses: azure/arm-deploy@v1
@@ -40,7 +44,7 @@ jobs:
           scope: subscription
           region: ${{ env.REGION }}
           deploymentName:  ${{ env.DEPLOYMENT_NAME }}
-          template: ./bicep/main.bicep
+          template: ./bicep/main.json
           parameters: ./bicep/main.parameters.json adminUsername=${{ secrets.VM_USERNAME }} adminPassword=${{ secrets.VM_PASSWORD }}
 
       - uses: gliech/create-github-secret-action@v1
