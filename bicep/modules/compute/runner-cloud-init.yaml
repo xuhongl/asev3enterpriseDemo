@@ -1,0 +1,17 @@
+#cloud-config
+package_upgrade: true
+packages:
+  - curl
+  - git
+  - install
+  - ca-certificates
+  - gnupg
+  - lsb-release
+  - jq
+runcmd:
+  # Installing azure cli
+  - curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
+  
+  # Adding current user (defined when creating the VM to the sudo group)
+  # https://linuxize.com/post/how-to-add-user-to-sudoers-in-ubuntu/
+  - echo "${USER}  ALL=(ALL) NOPASSWD:ALL" | sudo tee "/etc/sudoers.d/${USER}"
