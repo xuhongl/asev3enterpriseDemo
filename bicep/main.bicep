@@ -103,7 +103,7 @@ module ase 'modules/ase/ase.bicep' = {
   }
 }
 
-module dnsZone 'modules/DNS/privatezone.bicep'= {
+module dnsZone 'modules/DNS/privatezone.ase.bicep'= {
   scope: resourceGroup(spokeRg.name)
   name: 'dnsZone'
   params: {
