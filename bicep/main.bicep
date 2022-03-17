@@ -129,4 +129,14 @@ module workspace 'modules/analytics/workspace.bicep' = {
   }
 }
 
+module vault 'modules/vault/keyvault.bicep' = {
+  scope: resourceGroup(hubRg.name)
+  name: 'vault'
+  params: {
+    location: location
+    suffix: hubsuffix
+  }
+}
+
 output webAppname string = web.outputs.webappname
+output vaultName string = vault.outputs.vaultName

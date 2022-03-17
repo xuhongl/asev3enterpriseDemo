@@ -33,6 +33,7 @@ jobs:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
 
       - name: deploy
+        id: createResources
         uses: azure/arm-deploy@v1
         with:
           subscriptionId: ${{ secrets.AZURE_SUBSCRIPTION }}
@@ -41,6 +42,20 @@ jobs:
           deploymentName:  ${{ env.DEPLOYMENT_NAME }}
           template: ./bicep/main.bicep
           parameters: ./bicep/main.parameters.json
+
+      - uses: gliech/create-github-secret-action@v1
+        name: Write Web App Name
+        with:
+          name: WEBAPP_NAME
+          value: ${{ steps.createResources.outputs.webappname }}
+          pa_token: ${{ secrets.PA_TOKEN }}          
+
+      - uses: gliech/create-github-secret-action@v1
+        name: Write Vault Name
+        with:
+          name: VAULT_NAME
+          value: ${{ steps.createResources.outputs.vaultName }}
+          pa_token: ${{ secrets.PA_TOKEN }}                
 
 
     
