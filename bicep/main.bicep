@@ -167,5 +167,19 @@ module vault 'modules/vault/keyvault.bicep' = {
   }
 }
 
+module privateEndpointVault 'modules/DNS/privatezone.vault.bicep' = {
+  scope: resourceGroup(hubRg.name)
+  name: 'privateEndpointVault'
+  params: {
+    hubVnetid: vnetHub.outputs.vnetId
+    hubVnetName: vnetHub.outputs.vnetName
+    keyVaultId: vault.outputs.vaultId
+    location: location
+    peSubnetId: vnetHub.outputs.subnets[1].id
+    spokeVnetid: vnetSpoke.outputs.vnetId
+    spokeVnetName: vnetSpoke.outputs.vnetName
+  }
+}
+
 output webAppname string = web.outputs.webappname
 output vaultName string = vault.outputs.vaultName
