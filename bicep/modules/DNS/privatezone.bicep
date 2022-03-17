@@ -31,26 +31,26 @@ resource aRecordAseAll 'Microsoft.Network/privateDnsZones/A@2020-06-01' = {
   }
 }
 
-// resource aRecordAseSCM 'Microsoft.Network/privateDnsZones/A@2020-06-01' = {
-//   name: '${privateZone}/*.scm'
-//   properties: {
-//     ttl: 3600
-//     aRecords: [
-//       {
-//         ipv4Address: asePrivateIp
-//       }
-//     ]
-//   }
-// }
+resource aRecordAseSCM 'Microsoft.Network/privateDnsZones/A@2020-06-01' = {
+  name: '${privateZone.name}/*.scm'
+  properties: {
+    ttl: 3600
+    aRecords: [
+      {
+        ipv4Address: asePrivateIp
+      }
+    ]
+  }
+}
 
-// resource aRecordAse 'Microsoft.Network/privateDnsZones/A@2020-06-01' = {
-//   name: '${privateZone}/@'
-//   properties: {
-//     ttl: 3600
-//     aRecords: [
-//       {
-//         ipv4Address: asePrivateIp
-//       }
-//     ]
-//   }
-// }
+resource aRecordAse 'Microsoft.Network/privateDnsZones/A@2020-06-01' = {
+  name: '${privateZone.name}/@'
+  properties: {
+    ttl: 3600
+    aRecords: [
+      {
+        ipv4Address: asePrivateIp
+      }
+    ]
+  }
+}
