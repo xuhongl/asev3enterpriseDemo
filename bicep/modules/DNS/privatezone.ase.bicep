@@ -7,7 +7,7 @@ param asePrivateIp string
 param privateIpRunner string
 param runnerVmName string
 param privateIpJumpbox string
-param jumpboxName
+param jumpboxName string
 
 resource privateZone 'Microsoft.Network/privateDnsZones@2020-06-01' = {
   name: '${aseName}.appserviceenvironment.net'
