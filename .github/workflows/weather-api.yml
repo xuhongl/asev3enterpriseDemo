@@ -3,6 +3,14 @@ name: Deploy Weather Api
 on:
   workflow_dispatch:
 
+  push:
+    branches:
+    - main
+   
+    paths:
+    - src/WeatherApi/**    
+    - .github/workflows/weather-api.yml  
+
 env:
   AZURE_WEBAPP_DIRECTORY: ./src/WeatherApi
   AZURE_WEBAPP_PACKAGE_PATH: package
@@ -39,4 +47,4 @@ jobs:
         uses: azure/webapps-deploy@v2
         with: 
           app-name: ${{ secrets.WEBAPP_NAME }}         
-          package: '${{ env.AZURE_WEBAPP_PACKAGE_PATH }}'
+          package: '${{ env.AZURE_WEBAPP_DIRECTORY}}/${{ env.AZURE_WEBAPP_PACKAGE_PATH }}'

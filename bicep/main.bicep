@@ -171,14 +171,14 @@ module workspace 'modules/analytics/workspace.bicep' = {
   }
 }
 
-// module vault 'modules/vault/keyvault.bicep' = {
-//   scope: resourceGroup(hubRg.name)
-//   name: 'vault'
-//   params: {
-//     location: location
-//     suffix: hubsuffix
-//   }
-// }
+module vault 'modules/vault/keyvault.bicep' = {
+  scope: resourceGroup(hubRg.name)
+  name: 'vault'
+  params: {
+    location: location
+    suffix: hubsuffix
+  }
+}
 
 module privateEndpointVault 'modules/DNS/privatezone.vault.bicep' = {
   scope: resourceGroup(hubRg.name)
