@@ -1,3 +1,10 @@
+# Introduction
+
+The purpose of this demo is to illustrate a common setup leveraging App Service Environment v3 with the hub and spoke networking architecture.
+
+The App Service Environment will be of type internal
+
+
 # asev3enterpriseDemo
 Github with ASEv3 implemented Enterprise edition
 

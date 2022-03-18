@@ -6,6 +6,8 @@ param vnetNameHub string
 param asePrivateIp string
 param privateIpRunner string
 param runnerVmName string
+param privateIpJumpbox string
+param jumpboxName
 
 resource privateZone 'Microsoft.Network/privateDnsZones@2020-06-01' = {
   name: '${aseName}.appserviceenvironment.net'
@@ -41,6 +43,18 @@ resource aRecordRunner 'Microsoft.Network/privateDnsZones/A@2020-06-01' = {
     aRecords: [
       {
         ipv4Address: privateIpRunner
+      }
+    ]
+  }
+}
+
+resource aRecordJumpbox 'Microsoft.Network/privateDnsZones/A@2020-06-01' = {
+  name: '${privateZone.name}/${jumpboxName}'
+  properties: {
+    ttl: 3600
+    aRecords: [
+      {
+        ipv4Address: privateIpJumpbox
       }
     ]
   }

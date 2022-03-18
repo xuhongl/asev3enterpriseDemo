@@ -11,6 +11,16 @@ resource nsgrunner 'Microsoft.Network/networkSecurityGroups@2021-05-01' = {
   }
 }
 
+resource nsgjumpbox 'Microsoft.Network/networkSecurityGroups@2021-05-01' = {
+  name: 'nsg-jumpbox'
+  location: location
+  properties: {
+    securityRules: [
+      
+    ]
+  }
+}
+
 resource vnet 'Microsoft.Network/virtualNetworks@2021-05-01' = {
   name: vnetConfiguration.name
   location: location
@@ -43,7 +53,16 @@ resource vnet 'Microsoft.Network/virtualNetworks@2021-05-01' = {
             id: nsgrunner.id
           }
         }
-      }            
+      }  
+      {
+        name: vnetConfiguration.subnets[3].name
+        properties: {
+          addressPrefix: vnetConfiguration.subnets[3].addressPrefix
+          networkSecurityGroup: {
+            id: nsgjumpbox.id
+          }
+        }
+      }                  
     ]
   }
 }

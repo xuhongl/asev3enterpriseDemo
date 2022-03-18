@@ -18,7 +18,7 @@ resource networkLinkHub 'Microsoft.Network/privateDnsZones/virtualNetworkLinks@2
     virtualNetwork: {
       id: hubVnetid
     }
-    registrationEnabled: false
+    registrationEnabled: true
   }
 }
 
