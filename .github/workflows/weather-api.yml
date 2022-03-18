@@ -1,10 +1,10 @@
-name: Deploy Todo Api
+name: Deploy Weather Api
 
 on:
   workflow_dispatch:
 
 env:
-  AZURE_WEBAPP_DIRECTORY: ./src/TodoApi
+  AZURE_WEBAPP_DIRECTORY: ./src/WeatherApi
   AZURE_WEBAPP_PACKAGE_PATH: package
 
 
@@ -12,7 +12,7 @@ jobs:
 
   build-web-api:
 
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     
     steps:
 
@@ -30,7 +30,13 @@ jobs:
           dotnet publish -c Release -o '${{ env.AZURE_WEBAPP_PACKAGE_PATH }}'
         working-directory: ${{ env.AZURE_WEBAPP_DIRECTORY }}
 
-      - uses: actions/upload-artifact@v2
+      - name: Azure Login
+        uses: Azure/login@v1
         with:
-          name: api-artifact
-          path: '${{ env.AZURE_WEBAPP_DIRECTORY }}/${{ env.AZURE_WEBAPP_PACKAGE_PATH }}'
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: 'Run Azure webapp deploy'
+        uses: azure/webapps-deploy@v2
+        with: 
+          app-name: ${{ secrets.WEBAPP_NAME }}         
+          package: '${{ env.AZURE_WEBAPP_PACKAGE_PATH }}'
