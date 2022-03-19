@@ -56,17 +56,6 @@ module runner 'modules/compute/runner.bicep' = {
   }
 }
 
-module jumpbox 'modules/compute/jumpbox.bicep' = {
-  scope: resourceGroup(hubRg.name)
-  name: 'jumpbox'
-  params: {
-    adminPassword: adminPassword
-    adminUsername: adminUsername
-    location: location
-    subnetId: vnetHub.outputs.subnets[3].id
-  }
-}
-
 module vnetSpoke 'modules/networking/vnet.spoke.bicep' = {
   scope: resourceGroup(spokeRg.name)
   name: 'vnetSpoke'
@@ -171,15 +160,6 @@ module workspace 'modules/analytics/workspace.bicep' = {
   }
 }
 
-module vault 'modules/vault/keyvault.bicep' = {
-  scope: resourceGroup(hubRg.name)
-  name: 'vault'
-  params: {
-    location: location
-    suffix: hubsuffix
-  }
-}
-
 module privateEndpointVault 'modules/DNS/privatezone.vault.bicep' = {
   scope: resourceGroup(hubRg.name)
   name: 'privateEndpointVault'
@@ -195,4 +175,3 @@ module privateEndpointVault 'modules/DNS/privatezone.vault.bicep' = {
 }
 
 output webAppname string = web.outputs.webappname
-output vaultName string = vault.outputs.vaultName

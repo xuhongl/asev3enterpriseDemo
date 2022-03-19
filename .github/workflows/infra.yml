@@ -2,13 +2,13 @@ name: Create Azure Resources
 
 on:
   workflow_dispatch:    
-  # push:
-  #   branches:
-  #   - main
+  push:
+    branches:
+    - main
    
-  #   paths:
-  #   - bicep/**    
-  #   - .github/workflows/infra.yml
+    paths:
+    - bicep/**    
+    - .github/workflows/infra.yml
 
 jobs:
   create-azure-resources:
@@ -50,16 +50,9 @@ jobs:
       - uses: gliech/create-github-secret-action@v1
         name: Write Web App Name
         with:
-          name: WEBAPP_NAME
+          name: WEBAPI_WEATHER_NAME
           value: ${{ steps.createResources.outputs.webappname }}
-          pa_token: ${{ secrets.PA_TOKEN }}          
-
-      # - uses: gliech/create-github-secret-action@v1
-      #   name: Write Vault Name
-      #   with:
-      #     name: VAULT_NAME
-      #     value: ${{ steps.createResources.outputs.vaultName }}
-      #     pa_token: ${{ secrets.PA_TOKEN }}                
+          pa_token: ${{ secrets.PA_TOKEN }}           
 
 
     

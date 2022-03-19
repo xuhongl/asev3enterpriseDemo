@@ -46,5 +46,5 @@ jobs:
       - name: 'Run Azure webapp deploy'
         uses: azure/webapps-deploy@v2
         with: 
-          app-name: ${{ secrets.WEBAPP_NAME }}         
+          app-name: ${{ secrets.WEBAPI_WEATHER_NAME }}         
           package: '${{ env.AZURE_WEBAPP_DIRECTORY}}/${{ env.AZURE_WEBAPP_PACKAGE_PATH }}'
