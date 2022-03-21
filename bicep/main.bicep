@@ -115,8 +115,6 @@ module dnsZone 'modules/DNS/privatezone.ase.bicep'= {
     runnerVmName: runner.outputs.vmName
     spokeVnetId: vnetSpoke.outputs.vnetId
     vnetNameHub: vnetHub.outputs.vnetName
-    jumpboxName: jumpbox.outputs.jumpboxName
-    privateIpJumpbox: jumpbox.outputs.privateJumpboxIp
   }
 }
 
