@@ -47,9 +47,7 @@
                   },
                   {
                     "name": "snet-appgw",
-                    "properties": {
-                      "addressPrefix": "10.1.2.0/24"
-                    }                    
+                    "addressPrefix": "10.1.2.0/24"                    
                   }                  
                 ]
               }
