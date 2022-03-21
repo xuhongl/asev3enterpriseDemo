@@ -13,6 +13,7 @@ resource nsgAppGW 'Microsoft.Network/networkSecurityGroups@2021-05-01' = {
           access: 'Allow'
           protocol: 'Tcp'
           sourceAddressPrefix: '*'
+          sourcePortRange: '*'
           destinationAddressPrefix: '*'
           destinationPortRange: '443'
           priority: 100
@@ -24,6 +25,7 @@ resource nsgAppGW 'Microsoft.Network/networkSecurityGroups@2021-05-01' = {
           direction: 'Inbound'
           access: 'Allow'
           protocol: 'Tcp'
+          sourcePortRange: '*'
           destinationPortRange: '65200-65535'
           sourceAddressPrefix: 'GatewayManager'
           destinationAddressPrefix: '*'
