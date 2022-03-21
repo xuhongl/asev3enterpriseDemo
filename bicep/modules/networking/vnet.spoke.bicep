@@ -6,7 +6,30 @@ resource nsgAppGW 'Microsoft.Network/networkSecurityGroups@2021-05-01' = {
   location: location
   properties: {
     securityRules: [
-      
+      {
+        name: 'SSL_WEB_443'
+        properties: {
+          direction: 'Inbound'
+          access: 'Allow'
+          protocol: 'Tcp'
+          sourceAddressPrefix: '*'
+          destinationAddressPrefix: '*'
+          destinationPortRange: '443'
+          priority: 100
+        }
+      }
+      {
+        name: 'GatewayManager_Port'
+        properties: {
+          direction: 'Inbound'
+          access: 'Allow'
+          protocol: 'Tcp'
+          destinationPortRange: '65200-65535'
+          sourceAddressPrefix: 'GatewayManager'
+          destinationAddressPrefix: '*'
+          priority: 101          
+        }
+      }
     ]
   }
 }
