@@ -3,13 +3,13 @@ name: Deploy Weather Api
 on:
   workflow_dispatch:
 
-  push:
-    branches:
-    - main
+  # push:
+  #   branches:
+  #   - main
    
-    paths:
-    - src/WeatherApi/**    
-    - .github/workflows/weather-api.yml  
+  #   paths:
+  #   - src/WeatherApi/**    
+  #   - .github/workflows/weather-api.yml  
 
 env:
   AZURE_WEBAPP_DIRECTORY: ./src/WeatherApi
