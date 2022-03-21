@@ -158,4 +158,13 @@ module workspace 'modules/analytics/workspace.bicep' = {
   }
 }
 
+module vault 'modules/vault/keyvault.bicep' = {
+  scope: resourceGroup(spokeRg.name)
+  name: 'vault'
+  params: {
+    location: location
+    suffix: spokeSuffix
+  }
+}
+
 output webAppname string = web.outputs.webappname

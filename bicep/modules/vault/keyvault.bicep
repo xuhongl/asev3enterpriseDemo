@@ -7,21 +7,11 @@ resource vault 'Microsoft.KeyVault/vaults@2021-11-01-preview' = {
   properties: {
     accessPolicies: [
     ]
-    networkAcls: {
-      bypass: 'AzureServices'
-      defaultAction: 'Deny'
-      ipRules: [
-        
-      ]
-      virtualNetworkRules: [
-        
-      ]
-    }  
     enableRbacAuthorization: true
     enableSoftDelete: false
     sku: {
       family: 'A'
-      name: 'premium'
+      name: 'standard'
     }
     tenantId: subscription().tenantId
   }
