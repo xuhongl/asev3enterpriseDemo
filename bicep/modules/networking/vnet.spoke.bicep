@@ -43,4 +43,3 @@ output vnetId string = vnet.id
 output subnets array = vnet.properties.subnets
 
 
-vnetConfiguration.subnets
