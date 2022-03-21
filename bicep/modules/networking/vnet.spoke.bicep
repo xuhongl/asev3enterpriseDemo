@@ -38,6 +38,7 @@ resource nsgAppGW 'Microsoft.Network/networkSecurityGroups@2021-05-01' = {
 
 resource nsgAse 'Microsoft.Network/networkSecurityGroups@2021-05-01' = {
   name: 'nsg-ase'
+  location: location
   properties: {
     securityRules: [
       {
