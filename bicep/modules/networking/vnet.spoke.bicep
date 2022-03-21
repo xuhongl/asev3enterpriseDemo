@@ -71,10 +71,10 @@ resource vnet 'Microsoft.Network/virtualNetworks@2021-05-01' = {
       {
         name: vnetConfiguration.subnets[0].name
         properties: {
-          addressPrefix: vnetConfiguration.subnets[0].addressPrefix
-          delegations: vnetConfiguration.subnets[0].delegations
-          privateEndpointNetworkPolicies: vnetConfiguration.subnets[0].privateEndpointNetworkPolicies
-          privateLinkServiceNetworkPolicies: vnetConfiguration.subnets[0].privateLinkServiceNetworkPolicies
+          addressPrefix: vnetConfiguration.subnets[0].properties.addressPrefix
+          delegations: vnetConfiguration.subnets[0].properties.delegations
+          privateEndpointNetworkPolicies: vnetConfiguration.subnets[0].properties.privateEndpointNetworkPolicies
+          privateLinkServiceNetworkPolicies: vnetConfiguration.subnets[0].properties.privateLinkServiceNetworkPolicies
           networkSecurityGroup: {
             id: nsgAse.id
           }
