@@ -7,8 +7,13 @@ param asePrivateIp string
 param privateIpRunner string
 param runnerVmName string
 
+// resource privateZone 'Microsoft.Network/privateDnsZones@2020-06-01' = {
+//   name: '${aseName}.appserviceenvironment.net'
+//   location: 'global'  
+// }
+
 resource privateZone 'Microsoft.Network/privateDnsZones@2020-06-01' = {
-  name: '${aseName}.appserviceenvironment.net'
+  name: '${aseName}.hugogirard.net'
   location: 'global'  
 }
 
