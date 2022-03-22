@@ -190,3 +190,6 @@ module keyVaultContributorRole 'modules/identity/vault.contributor.role.bicep' =
 }
 
 output webAppname string = web.outputs.webappname
+output gatewaySubnetId string = vnetSpoke.outputs.subnets[1].id
+output webAppFQDN string = web.outputs.webAppFQDN
+output gwIdentityId string = userAssignedIdentity.outputs.identityId

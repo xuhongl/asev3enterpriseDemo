@@ -18,3 +18,4 @@ resource web 'Microsoft.Web/sites@2021-03-01' = {
 }
 
 output webappname string = web.name
+output webAppFQDN string = web.properties.hostNames[0]

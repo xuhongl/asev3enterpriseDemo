@@ -1,0 +1,50 @@
+name: Create Application Gateway
+
+on:
+  workflow_dispatch:    
+jobs:
+  create-azure-resources:
+
+    env:
+      DEPLOYMENT_NAME: appgw-deployment
+      REGION: 'eastus' # You can change this to reflect the region where you deploy your ASE
+
+    runs-on: ubuntu-latest
+
+    steps:
+      
+      - uses: actions/checkout@v2
+
+      - name: Validate that bicep builds
+        run: az bicep build -f main.bicep
+        working-directory: ./bicep
+
+      - name: Azure Login
+        uses: Azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: Convert to ARM
+        run: |
+          bicep build ./bicep/main.bicep 
+
+      - name: deploy
+        id: createResources
+        uses: azure/arm-deploy@v1
+        with:
+          subscriptionId: ${{ secrets.AZURE_SUBSCRIPTION }}
+          scope: subscription
+          region: ${{ env.REGION }}
+          deploymentName:  ${{ env.DEPLOYMENT_NAME }}
+          template: ./bicep/main.json
+          parameters: ./bicep/main.parameters.json adminUsername=${{ secrets.VM_USERNAME }} adminPassword=${{ secrets.VM_PASSWORD }}
+
+      - uses: gliech/create-github-secret-action@v1
+        name: Write Web App Name
+        with:
+          name: WEBAPI_WEATHER_NAME
+          value: ${{ steps.createResources.outputs.webappname }}
+          pa_token: ${{ secrets.PA_TOKEN }}           
+
+
+    
