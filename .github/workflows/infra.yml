@@ -23,6 +23,7 @@ jobs:
       webAppFQDN: ${{ steps.createResources.outputs.webAppFQDN }}
       gatewaySubnetId: ${{ steps.createResources.outputs.gatewaySubnetId }}
       gwIdentityId: ${{ steps.createResources.outputs.gwIdentityId }}
+      spokeResourceGroupName: ${{ steps.createResources.outputs.spokeResourceGroupName }}
 
     steps:
       
@@ -76,8 +77,8 @@ jobs:
       - name: deploy application gateway        
         uses: azure/arm-deploy@v1
         with:
-          subscriptionId: ${{ secrets.AZURE_SUBSCRIPTION }}
-          scope: subscription
+          subscriptionId: ${{ secrets.AZURE_SUBSCRIPTION }}          
+          resourceGroupName: ${{ needs.create-azure-resources.outputs.spokeResourceGroupName }} 
           region: ${{ env.REGION }}
           deploymentName:  ${{ env.DEPLOYMENT_NAME }}
           template: ./bicep/gateway.bicep

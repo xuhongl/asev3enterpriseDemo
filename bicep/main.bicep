@@ -193,3 +193,4 @@ output webAppname string = web.outputs.webappname
 output gatewaySubnetId string = vnetSpoke.outputs.subnets[1].id
 output webAppFQDN string = web.outputs.webAppFQDN
 output gwIdentityId string = userAssignedIdentity.outputs.identityId
+output spokeResourceGroupName string = spokeRgName
