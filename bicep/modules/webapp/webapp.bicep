@@ -4,7 +4,7 @@ param appServiceId string
 param aseId string
 
 resource web 'Microsoft.Web/sites@2021-03-01' = {
-  name: 'helloworld-${suffix}'
+  name: 'weatherapi-${suffix}'
   location: location
   properties: {
     siteConfig: {

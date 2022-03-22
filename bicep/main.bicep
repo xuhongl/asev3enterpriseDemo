@@ -24,6 +24,9 @@ var spokeRgName = 'rg-spoke-ase-demo'
 var hubsuffix = uniqueString(hubRg.id)
 var spokeSuffix = uniqueString(spokeRg.id)
 
+// Vault contributor role, can change this in your template to lower priviledge role
+var vaultContributorRole = '/providers/Microsoft.Authorization/roleDefinitions/f25e0fa2-a7c8-4377-a976-54943a77a395'
+
 resource hubRg 'Microsoft.Resources/resourceGroups@2021-04-01' = {
   name: hubRgName
   location: location
@@ -164,6 +167,25 @@ module vault 'modules/vault/keyvault.bicep' = {
   params: {
     location: location
     suffix: spokeSuffix
+  }
+}
+
+module userAssignedIdentity 'modules/identity/appgw.identity.bicep' = {
+  scope: resourceGroup(spokeRg.name)
+  name: 'userAssignedIdentity'
+  params: {
+    location: location
+    suffix: spokeSuffix
+  }
+}
+
+module keyVaultContributorRole 'modules/identity/vault.contributor.role.bicep' = {
+  scope: resourceGroup(spokeRg.name)
+  name: 'keyVaultContributorRole'
+  params: {
+    principalId: userAssignedIdentity.outputs.principalId
+    roleGuid: vaultContributorRole    
+    vaultName: vault.outputs.vaultName
   }
 }
 
