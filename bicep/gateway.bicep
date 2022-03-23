@@ -108,7 +108,7 @@ resource appgw 'Microsoft.Network/ApplicationGateways@2020-06-01' = {
                     pickHostNameFromBackendAddress: true
                     requestTimeout: 20
                     probe: {                                                
-                        id: '${appGwId}probes/weatherApiProbe'
+                        id: '${appGwId}/probes/weatherApiProbe'
                     }
                 }
             }                        
