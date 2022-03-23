@@ -8,7 +8,7 @@ on:
     paths:
     - "bicep/**"
     - ".github/workflows/infra.yml"
-    
+
 jobs:
   create-azure-resources:
 
@@ -40,7 +40,7 @@ jobs:
           resourceGroupName: ${{ env.SPOKE_RG_NAME}} 
           deploymentName:  ${{ env.DEPLOYMENT_NAME }}
           template: ./bicep/gateway.json
-          parameters: gwSubnetId=${{ secrets.GATEWAY_SUBNET_ID }} certLink=${{ secrets.CERTIFICATE_URL }} location=${{ env.REGION }} weatherApiFQDN=${{ secrets.WEBAPP_FQDN }} customDomainWeatherApiFQDN=${{ secrets.CUSTOM_DOMAIN_WEATHER_API }} identityId=${{ secrets.GATEWAY_USER_ASSIGNED_ID }}
+          parameters: gwSubnetId=${{ secrets.GATEWAY_SUBNET_ID }} certLink=${{ secrets.CERTIFICATE_URL }} location=${{ env.LOCATION }} weatherApiFQDN=${{ secrets.WEBAPP_FQDN }} customDomainWeatherApiFQDN=${{ secrets.CUSTOM_DOMAIN_WEATHER_API }} identityId=${{ secrets.GATEWAY_USER_ASSIGNED_ID }}
 
 
     
