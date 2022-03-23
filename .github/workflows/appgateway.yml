@@ -1,13 +1,21 @@
 name: Create Application Gateway
 
 on:
-  workflow_dispatch:    
+  workflow_dispatch:
+  push:
+    branches:
+      - "main"
+    paths:
+    - "bicep/**"
+    - ".github/workflows/infra.yml"
+    
 jobs:
   create-azure-resources:
 
     env:
       DEPLOYMENT_NAME: appgw-deployment
-      REGION: 'eastus' # You can change this to reflect the region where you deploy your ASE
+      SPOKE_RG_NAME: 'rg-spoke-ase-demo'
+      LOCATION: 'eastus' # You can change this to reflect the region where you deploy your ASE
 
     runs-on: ubuntu-latest
 
@@ -16,7 +24,7 @@ jobs:
       - uses: actions/checkout@v2
 
       - name: Validate that bicep builds
-        run: az bicep build -f main.bicep
+        run: az bicep build -f gateway.bicep
         working-directory: ./bicep
 
       - name: Azure Login
@@ -24,27 +32,15 @@ jobs:
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
 
-      - name: Convert to ARM
-        run: |
-          bicep build ./bicep/main.bicep 
-
       - name: deploy
         id: createResources
         uses: azure/arm-deploy@v1
         with:
-          subscriptionId: ${{ secrets.AZURE_SUBSCRIPTION }}
-          scope: subscription
-          region: ${{ env.REGION }}
+          subscriptionId: ${{ secrets.AZURE_SUBSCRIPTION }}          
+          resourceGroupName: ${{ env.SPOKE_RG_NAME}} 
           deploymentName:  ${{ env.DEPLOYMENT_NAME }}
-          template: ./bicep/main.json
-          parameters: ./bicep/main.parameters.json adminUsername=${{ secrets.VM_USERNAME }} adminPassword=${{ secrets.VM_PASSWORD }}
-
-      - uses: gliech/create-github-secret-action@v1
-        name: Write Web App Name
-        with:
-          name: WEBAPI_WEATHER_NAME
-          value: ${{ steps.createResources.outputs.webappname }}
-          pa_token: ${{ secrets.PA_TOKEN }}           
+          template: ./bicep/gateway.json
+          parameters: gwSubnetId=${{ secrets.GATEWAY_SUBNET_ID }} certLink=${{ secrets.CERTIFICATE_URL }} location=${{ env.REGION }} weatherApiFQDN=${{ secrets.WEBAPP_FQDN }} customDomainWeatherApiFQDN=${{ secrets.CUSTOM_DOMAIN_WEATHER_API }} identityId=${{ secrets.GATEWAY_USER_ASSIGNED_ID }}
 
 
     

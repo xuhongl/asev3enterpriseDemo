@@ -73,31 +73,7 @@ jobs:
         with:
           name: GATEWAY_USER_ASSIGNED_ID
           value: ${{ steps.createResources.outputs.gwIdentityId }}
-          pa_token: ${{ secrets.PA_TOKEN }}                              
-
-  # create-application-gateway:
-  #   environment:
-  #     name: PROD
-  #   needs: create-azure-resources
-  #   runs-on: ubuntu-latest
-
-  #   env:      
-  #     DEPLOYMENT_NAME: appgw-deployment
-  #     REGION: 'eastus'
-
-  #   steps:
-
-  #     - uses: actions/checkout@v2
-
-  #     - name: deploy application gateway        
-  #       uses: azure/arm-deploy@v1
-  #       with:
-  #         subscriptionId: ${{ secrets.AZURE_SUBSCRIPTION }}          
-  #         resourceGroupName: ${{ needs.create-azure-resources.outputs.spokeResourceGroupName }} 
-  #         region: ${{ env.REGION }}
-  #         deploymentName:  ${{ env.DEPLOYMENT_NAME }}
-  #         template: ./bicep/gateway.bicep
-  #         parameters: gwSubnetId=${{ needs.create-azure-resources.outputs.gatewaySubnetId }} certLink=${{ secrets.CERTIFICATE_URL }} location=${{ env.REGION }} weatherApiFQDN=${{ needs.create-azure-resources.outputs.webAppFQDN }} customDomainWeatherApiFQDN=${{ secrets.CUSTOM_DOMAIN_WEATHER_API }} identityId=${{ needs.create-azure-resources.outputs.gwIdentityId }}
+          pa_token: ${{ secrets.PA_TOKEN }}
                         
 
 
