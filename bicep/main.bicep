@@ -146,6 +146,7 @@ module web 'modules/webapp/webapp.bicep' = {
   name: 'web'
   params: {
     appServiceId: appServicePlan.outputs.appserviceId
+    aseName: ase.outputs.aseName
     aseId: ase.outputs.aseId
     location: location
     suffix: spokeSuffix

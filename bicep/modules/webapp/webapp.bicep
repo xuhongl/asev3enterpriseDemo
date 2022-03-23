@@ -2,6 +2,7 @@ param location string
 param suffix string
 param appServiceId string
 param aseId string
+param aseName string
 
 resource web 'Microsoft.Web/sites@2021-03-01' = {
   name: 'weatherapi-${suffix}'
@@ -18,4 +19,4 @@ resource web 'Microsoft.Web/sites@2021-03-01' = {
 }
 
 output webappname string = web.name
-output webAppFQDN string = web.properties.hostNames[0]
+output webAppFQDN string = '${web.name}.${aseName}.appserviceenvironment.net'
