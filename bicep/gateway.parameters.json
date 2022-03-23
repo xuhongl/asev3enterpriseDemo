@@ -1,0 +1,21 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "location": {
+            "value": "__location__"
+        },
+        "gwSubnetId": {
+            "value": "__gwSubnetId__"
+        },
+        "weatherApiFQDN": {
+            "value": "__weatherApiFQDN__"
+        },
+        "customDomainWeatherApiFQDN": {
+            "value": "__customDomainWeatherApiFQDN__"
+        },
+        "identityId": {
+            "value": "__identityId__"
+        }
+    }
+}

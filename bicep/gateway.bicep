@@ -1,12 +1,16 @@
 param gwSubnetId string
-param certLink string
 param location string
 param weatherApiFQDN string
 param customDomainWeatherApiFQDN string
 param identityId string
 
+param certificate_data string
+param certificate_password string
+
 var suffix = uniqueString(resourceGroup().id)
 var appgwName = 'appgwprv-${suffix}'
+
+var appGwId = resourceId('Microsoft.Network/applicationGateways',appgwName)
 
 resource pip 'Microsoft.Network/publicIPAddresses@2020-06-01' = {
     name: 'gwpip'
@@ -57,7 +61,8 @@ resource appgw 'Microsoft.Network/ApplicationGateways@2020-06-01' = {
             {
                 name: 'wild'
                 properties: {
-                    keyVaultSecretId: certLink
+                    data: certificate_data
+                    password: certificate_password
                 }
             }
         ]
@@ -102,8 +107,8 @@ resource appgw 'Microsoft.Network/ApplicationGateways@2020-06-01' = {
                     cookieBasedAffinity: 'Disabled'
                     pickHostNameFromBackendAddress: true
                     requestTimeout: 20
-                    probe: {
-                        id: resourceId('Microsoft.Network/applicationGateways/probes',appgwName,'weatherApiProbe')
+                    probe: {                                                
+                        id: '${appGwId}probes/weatherApiProbe'
                     }
                 }
             }                        
@@ -113,13 +118,13 @@ resource appgw 'Microsoft.Network/ApplicationGateways@2020-06-01' = {
                 name: 'https-listener'
                 properties: {
                     frontendIPConfiguration: {
-                        id: resourceId('Microsoft.Network/applicationGateways/frontendIPConfigurations', appgwName, 'appGwPublicFrontendIp')
+                        id: '${appGwId}/frontendIPConfigurations/appGwPublicFrontendIp'
                     }
                     frontendPort: {
-                        id: resourceId('Microsoft.Network/applicationGateways/frontendPorts',appgwName,'port_443')
+                        id: '${appGwId}/frontendPorts/port_443'
                     }
                     sslCertificate: {
-                        id: resourceId('Microsoft.Network/applicationGateways/sslCertificates',appgwName,'wild')
+                        id: '${appGwId}/sslCertificates/wild'
                     }
                     hostName: customDomainWeatherApiFQDN
                     protocol: 'Https'
@@ -129,17 +134,17 @@ resource appgw 'Microsoft.Network/ApplicationGateways@2020-06-01' = {
         ]
         requestRoutingRules: [
             {
-                name: 'http-routingrule'
+                name: 'https-rule'
                 properties: {
                     ruleType: 'Basic'
                     httpListener: {
-                        id: resourceId('Microsoft.Network/applicationGateways/httpListeners',appgwName,'https-listener')
+                        id: '${appGwId}/httpListeners/https-listener'
                     }
                     backendAddressPool: {
-                        id: resourceId('Microsoft.Network/applicationGateways/backendAddressPools',appgwName,'weatherApiPool')
+                        id: '${appGwId}/backendAddressPools/weatherApiPool'
                     }
                     backendHttpSettings: {
-                        id: resourceId('Microsoft.Network/applicationGateways/backendHttpSettingsCollection',appgwName,'backendHttpSettingsCollection')
+                        id: '${appGwId}/backendHttpSettingsCollection/https-settings'
                     }
                 }
             }                              

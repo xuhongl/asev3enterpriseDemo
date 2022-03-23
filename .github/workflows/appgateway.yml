@@ -32,6 +32,19 @@ jobs:
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
 
+      - name: Replace tokens
+        uses: cschleiden/replace-tokens@v1.0
+        with:        
+          tokenPrefix: __        
+          tokenSuffix: __        
+          files: '["bicep/gateway.parameters.json"]'
+        env:
+          location: ${{ env.LOCATION }}
+          gwSubnetId: ${{ secrets.GATEWAY_SUBNET_ID }}
+          weatherApiFQDN: ${{ secrets.WEBAPP_FQDN }}
+          customDomainWeatherApiFQDN: ${{ secrets.CUSTOM_DOMAIN_WEATHER_API }}
+          identityId: ${{ secrets.GATEWAY_USER_ASSIGNED_ID }}
+
       - name: deploy
         id: createResources
         uses: azure/arm-deploy@v1
@@ -40,7 +53,7 @@ jobs:
           resourceGroupName: ${{ env.SPOKE_RG_NAME}} 
           deploymentName:  ${{ env.DEPLOYMENT_NAME }}
           template: ./bicep/gateway.json
-          parameters: gwSubnetId=${{ secrets.GATEWAY_SUBNET_ID }} certLink=${{ secrets.CERTIFICATE_URL }} location=${{ env.LOCATION }} weatherApiFQDN=${{ secrets.WEBAPP_FQDN }} customDomainWeatherApiFQDN=${{ secrets.CUSTOM_DOMAIN_WEATHER_API }} identityId=${{ secrets.GATEWAY_USER_ASSIGNED_ID }}
+          parameters: bicep/gateway.parameters.json certificate_data=${{ secrets.CERTIFICATE_DATA }} certificate_password=${{ secrets.CERTIFICATE_PASSWORD }}
 
 
     
