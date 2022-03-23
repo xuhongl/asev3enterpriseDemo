@@ -100,7 +100,7 @@ resource appgw 'Microsoft.Network/ApplicationGateways@2020-06-01' = {
         ]
         backendHttpSettingsCollection: [
             {
-                name: 'https-setting'
+                name: 'https-settings'
                 properties: {
                     port: 443
                     protocol: 'Https'
