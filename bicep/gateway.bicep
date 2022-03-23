@@ -40,8 +40,7 @@ resource appgw 'Microsoft.Network/ApplicationGateways@2020-06-01' = {
     properties: {
         sku: {
             name: 'WAF_v2'
-            tier: 'WAF_v2'
-            capacity: 2            
+            tier: 'WAF_v2'         
         }
         autoscaleConfiguration: {
           minCapacity: 1
