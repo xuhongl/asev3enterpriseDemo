@@ -30,12 +30,6 @@ resource appgw 'Microsoft.Network/ApplicationGateways@2020-06-01' = {
     dependsOn: [
         pip
     ]
-    identity: {
-        type: 'UserAssigned'
-        userAssignedIdentities: {
-            '${identityId}': {}
-        }
-    }
     properties: {
         sku: {
             name: 'WAF_v2'
