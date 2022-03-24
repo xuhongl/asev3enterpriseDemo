@@ -37,7 +37,6 @@ jobs:
           gwSubnetId: ${{ secrets.GATEWAY_SUBNET_ID }}
           weatherApiFQDN: ${{ secrets.WEBAPP_FQDN }}
           customDomainWeatherApiFQDN: ${{ secrets.CUSTOM_DOMAIN_WEATHER_API }}
-          identityId: ${{ secrets.GATEWAY_USER_ASSIGNED_ID }}
 
       - name: deploy
         id: createResources

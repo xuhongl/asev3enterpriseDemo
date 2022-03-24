@@ -1,13 +1,26 @@
 - [Introduction](#introduction)
 - [Prerequisites](#prerequisites)
-- 
-
+- [Generate SSL Certificat](#generating-ssl-certificate-with-azure-dns-public-zone-(optional))
+  - [Create Azure DNS Public Zone](#create-azure-dns-public-zone)
+  - [Run the Powershell script](#run-the-powershell-script)
+- [Create the environment](#create-the-environment)
+  - [Get the base64 encoded value of your certificate](#get-the-base64-encoded-value-of-your-certificate)
 
 # Introduction
 
 The purpose of this demo is to illustrate a common setup leveraging App Service Environment v3 with the hub and spoke networking architecture.
 
 The App Service Environment will be of type internal, all ingress will be thru Azure Application Gateway with WAF and all egress thru the Azure Firewall.
+
+# Architecture
+
+This diagram illustrate the architecture for this demo repository.  The networking topology used it's [hub and spoke](https://docs.microsoft.com/en-us/azure/architecture/reference-architectures/hybrid-networking/hub-spoke?tabs=cli).
+
+All ingress traffic from the Internet is coming thru the Application Gateway and filtered using a Web Application Firewall.
+
+All egress traffic is passing thru Azure Firewall before going back to the internet.
+
+<img src=https://raw.githubusercontent.com/hugogirard/asev3enterpriseDemo/main/diagram/architecture.svg />
 
 # Prerequisites
 
@@ -29,14 +42,14 @@ Here the tool you need to installe on your machine.
 
 Here the [list](https://letsencrypt.org/docs/client-options/) of all supported clients if you want to implement your own logic for the **Let's Encrypt Certificate**.
 
-### Create Azure DNS Public Zone
+## Create Azure DNS Public Zone
 
 This demo is using Azure Public DNS Zone, you will need to have a domain that you own from any register.  Once is done you need to configure your DNS in your domain register with Azure DNS Public Zone entry.
 
 It's all explain [here](https://docs.microsoft.com/en-us/azure/dns/dns-getstarted-portal).
 
 
-### Run this step ONLY if you don't have a SSL certificate
+## Run the Powershell script
 
 Be sure you already configured your **Azure Public DNS Zone**.
 
@@ -68,7 +81,9 @@ When the command is finished, a new folder called **pa** will be created inside 
 
 If you browse in it inside the last child folder of **acme-v02.api.letsencrypt.org** you will see those files. The important file is called cert.pfx.
 
-# Get the base64 encoded value of your certificate
+# Create the environment
+
+## Get the base64 encoded value of your certificate
 
 You will need to create GitHub secrets to configure this repository.  Two of them are related to your certificate needed to have SSL when communicating with the Application Gateway.
 
@@ -81,6 +96,25 @@ $fileContentBytes = get-content 'cert.pfx' -Encoding Byte
 ```
 [System.Convert]::ToBase64String($fileContentBytes) | Out-File 'pfx-bytes.txt'
 ```
+
+## Create Github Secrets
+
+You will need to create some [GitHub repository secrets](https://docs.github.com/en/codespaces/managing-codespaces-for-your-organization/managing-encrypted-secrets-for-your-repository-and-organization-for-codespaces#adding-secrets-for-a-repository) first.  Here the list of secrets you will need to create.
+
+| Secret Name | Value | Link
+|-------------|-------|------|
+| AZURE_CREDENTIALS | The service principal credentials needed in the Github Action | [GitHub Action](https://github.com/marketplace/actions/azure-login)
+| AZURE_SUBSCRIPTION | The subscription ID where the resources will be created |
+| CERTIFICATE_DATA | The base64 value of your pfx certificate file |
+| CERTIFICATE_PASSWORD | The password of your pfx file |
+| CUSTOM_DOMAIN_WEATHER_API | The custom domain of the weather API like weatherapi.contoso.com |
+| PA_TOKEN | Needed to create GitHub repository secret within the GitHub action |  [Github Action](https://github.com/gliech/create-github-secret-action)
+| VM_PASSWORD | The password needed for the Github Self Runner |
+| VM_USERNAME | The username needed for the Github Self Runner |
+
+## Run Create Azure Resources GitHub Action
+
+Now you can go to the Actions tab and Run the Create Azure Resources GitHub Actions.
 
 <!-- # asev3enterpriseDemo
 Github with ASEv3 implemented Enterprise edition

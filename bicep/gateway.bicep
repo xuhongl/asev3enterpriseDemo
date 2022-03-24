@@ -2,7 +2,6 @@ param gwSubnetId string
 param location string
 param weatherApiFQDN string
 param customDomainWeatherApiFQDN string
-param identityId string
 
 param certificate_data string
 param certificate_password string

@@ -13,9 +13,6 @@
         },
         "customDomainWeatherApiFQDN": {
             "value": "__customDomainWeatherApiFQDN__"
-        },
-        "identityId": {
-            "value": "__identityId__"
         }
     }
 }

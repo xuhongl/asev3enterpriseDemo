@@ -59,13 +59,6 @@ jobs:
         with:
           name: GATEWAY_SUBNET_ID
           value: ${{ steps.createResources.outputs.gatewaySubnetId }}
-          pa_token: ${{ secrets.PA_TOKEN }}     
-
-      - uses: gliech/create-github-secret-action@v1
-        name: Write Gateway User Assigned Identity
-        with:
-          name: GATEWAY_USER_ASSIGNED_ID
-          value: ${{ steps.createResources.outputs.gwIdentityId }}
           pa_token: ${{ secrets.PA_TOKEN }}
                         
 

@@ -163,36 +163,7 @@ module workspace 'modules/analytics/workspace.bicep' = {
   }
 }
 
-module vault 'modules/vault/keyvault.bicep' = {
-  scope: resourceGroup(spokeRg.name)
-  name: 'vault'
-  params: {
-    location: location
-    suffix: spokeSuffix
-  }
-}
-
-module userAssignedIdentity 'modules/identity/appgw.identity.bicep' = {
-  scope: resourceGroup(spokeRg.name)
-  name: 'userAssignedIdentity'
-  params: {
-    location: location
-    suffix: spokeSuffix
-  }
-}
-
-module keyVaultContributorRole 'modules/identity/vault.contributor.role.bicep' = {
-  scope: resourceGroup(spokeRg.name)
-  name: 'keyVaultContributorRole'
-  params: {
-    principalId: userAssignedIdentity.outputs.principalId
-    roleGuid: vaultContributorRole    
-    vaultName: vault.outputs.vaultName
-  }
-}
-
 output webAppname string = web.outputs.webappname
 output gatewaySubnetId string = vnetSpoke.outputs.subnets[1].id
 output webAppFQDN string = web.outputs.webAppFQDN
-output gwIdentityId string = userAssignedIdentity.outputs.identityId
 output spokeResourceGroupName string = spokeRgName
