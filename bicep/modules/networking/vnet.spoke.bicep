@@ -1,5 +1,6 @@
 param vnetConfiguration object
 param location string
+param routeTableId string
 
 resource nsgAppGW 'Microsoft.Network/networkSecurityGroups@2021-05-01' = {
   name: 'nsg-appgw'
@@ -77,6 +78,9 @@ resource vnet 'Microsoft.Network/virtualNetworks@2021-05-01' = {
           privateLinkServiceNetworkPolicies: vnetConfiguration.subnets[0].properties.privateLinkServiceNetworkPolicies
           networkSecurityGroup: {
             id: nsgAse.id
+          }
+          routeTable: {
+            id: routeTableId
           }
         }
       }

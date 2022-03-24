@@ -5,7 +5,7 @@ param fwPublicIP string
 resource aseRouteTable 'Microsoft.Network/routeTables@2021-05-01' = {
   name: 'rt-ase'
   location: location
-  properties: {
+  properties: {    
     routes: [
       {
         name: 'ase-to-fw'

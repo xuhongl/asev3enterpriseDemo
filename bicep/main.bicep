@@ -59,12 +59,33 @@ module runner 'modules/compute/runner.bicep' = {
   }
 }
 
+module firewall 'modules/firewall/firewall.bicep' = {
+  scope: resourceGroup(hubRg.name)  
+  name: 'firewall'
+  params: {
+    location: location
+    subnetId: vnetHub.outputs.subnets[0].id
+    suffix: hubsuffix
+  }
+}
+
+module routeTable 'modules/networking/routeTable.bicep' = {
+  scope: resourceGroup(spokeRg.name)
+  name: 'routeTable'
+  params: {
+    fwPrivateIP: firewall.outputs.privateIp
+    fwPublicIP: firewall.outputs.publicIp
+    location: location
+  }
+}
+
 module vnetSpoke 'modules/networking/vnet.spoke.bicep' = {
   scope: resourceGroup(spokeRg.name)
   name: 'vnetSpoke'
   params: {
     location: location
     vnetConfiguration: vnetConfiguration.spoke
+    routeTableId: routeTable.outputs.routeTableId
   }
 }
 
@@ -83,16 +104,6 @@ module peeringspoke 'modules/networking/peering.bicep' = {
   params: {
     peeringName: '${vnetSpoke.outputs.vnetName}/spoke-to-hub'
     remoteVnetId: vnetHub.outputs.vnetId
-  }
-}
-
-module firewall 'modules/firewall/firewall.bicep' = {
-  scope: resourceGroup(hubRg.name)  
-  name: 'firewall'
-  params: {
-    location: location
-    subnetId: vnetHub.outputs.subnets[0].id
-    suffix: hubsuffix
   }
 }
 
@@ -118,16 +129,6 @@ module dnsZone 'modules/DNS/privatezone.ase.bicep'= {
     runnerVmName: runner.outputs.vmName
     spokeVnetId: vnetSpoke.outputs.vnetId
     vnetNameHub: vnetHub.outputs.vnetName
-  }
-}
-
-module routeTable 'modules/networking/routeTable.bicep' = {
-  scope: resourceGroup(spokeRg.name)
-  name: 'routeTable'
-  params: {
-    fwPrivateIP: firewall.outputs.privateIp
-    fwPublicIP: firewall.outputs.publicIp
-    location: location
   }
 }
 

@@ -1,3 +1,8 @@
+- [Introduction](#introduction)
+- [Prerequisites](#prerequisites)
+- 
+
+
 # Introduction
 
 The purpose of this demo is to illustrate a common setup leveraging App Service Environment v3 with the hub and spoke networking architecture.
@@ -12,7 +17,7 @@ Next, you will need to have a public domain name and a wildcard certificate.
 
 If you already own a public domain below some step to create a wildcard certificate using [Azure DNS Public Zone](https://docs.microsoft.com/en-us/azure/dns/dns-getstarted-portal).
 
-# Generating SSL certificate with Azure DNS Public Zone
+# Generating SSL certificate with Azure DNS Public Zone (optional)
 
 Here the tool you need to installe on your machine.
 
