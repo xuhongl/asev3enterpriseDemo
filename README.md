@@ -63,6 +63,20 @@ When the command is finished, a new folder called **pa** will be created inside 
 
 If you browse in it inside the last child folder of **acme-v02.api.letsencrypt.org** you will see those files. The important file is called cert.pfx.
 
+# Get the base64 encoded value of your certificate
+
+You will need to create GitHub secrets to configure this repository.  Two of them are related to your certificate needed to have SSL when communicating with the Application Gateway.
+
+You will need to find the base64 value of your certificate and save it as
+
+```
+$fileContentBytes = get-content 'cert.pfx' -Encoding Byte
+```
+
+```
+[System.Convert]::ToBase64String($fileContentBytes) | Out-File 'pfx-bytes.txt'
+```
+
 <!-- # asev3enterpriseDemo
 Github with ASEv3 implemented Enterprise edition
 
