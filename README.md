@@ -116,6 +116,14 @@ You will need to create some [GitHub repository secrets](https://docs.github.com
 
 Now you can go to the Actions tab and Run the Create Azure Resources GitHub Actions.
 
+## Configure the Github Runner
+
+Because the Application Service Environment is of type internal, you will need to deploy the APIs using [GitHub Self Runner](https://docs.github.com/en/actions/hosting-your-own-runners/about-self-hosted-runners).
+
+Connect to VM created in the resource group and follow the installation procedure.
+
+If you want to run the runner agent as a service (recommended) follow this [link](https://docs.github.com/en/actions/hosting-your-own-runners/configuring-the-self-hosted-runner-application-as-a-service) after the installation.
+
 <!-- # asev3enterpriseDemo
 Github with ASEv3 implemented Enterprise edition
 
