@@ -1,3 +1,5 @@
+using Microsoft.AspNetCore.Mvc;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -5,6 +7,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddHealthChecks();
+builder.Services.AddHttpClient();
 
 var app = builder.Build();
 
@@ -30,6 +33,22 @@ app.MapGet("/weatherforecast", () =>
     return forecast;
 })
 .WithName("GetWeatherForecast");
+
+app.MapGet("/google", ([FromServices] IHttpClientFactory httpClientFactory) =>
+{
+    var httpClient = httpClientFactory.CreateClient();
+    var httpResponseMessage = httpClient.GetAsync("https://www.google.com").GetAwaiter().GetResult();
+
+    if (httpResponseMessage.IsSuccessStatusCode)
+    {
+        string answer = httpResponseMessage.Content.ReadAsStringAsync().GetAwaiter().GetResult();
+        
+        return answer;
+    }
+
+    return "Failed";
+})
+.WithName("GetGoogle");
 
 app.MapHealthChecks("/healthz");
 
