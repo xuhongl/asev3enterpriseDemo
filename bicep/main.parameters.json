@@ -50,21 +50,21 @@
                     "addressPrefix": "10.1.2.0/24"                    
                   }                  
                 ]
-              }
-            },
-            "spokeDB": {
-              "name": "vnet-spoke-db",
-              "addressPrefixe": "11.0.0.0/16",
-              "subnets": [
-                {
-                  "name": "snet-prvEndpoint",
-                  "properties": {
-                    "addressPrefix": "11.0.1.0/24",
-                    "privateEndpointNetworkPolicies": "Disabled",
-                    "privateLinkServiceNetworkPolicies": "Enabled"
-                  }                    
-                }
-              ]
+              },
+              "spokeDB": {
+                "name": "vnet-spoke-db",
+                "addressPrefixe": "11.0.0.0/16",
+                "subnets": [
+                  {
+                    "name": "snet-prvEndpoint",
+                    "properties": {
+                      "addressPrefix": "11.0.1.0/24",
+                      "privateEndpointNetworkPolicies": "Disabled",
+                      "privateLinkServiceNetworkPolicies": "Enabled"
+                    }                    
+                  }
+                ]
+              }              
             }
         },
         "ubuntuVersion": {
