@@ -19,10 +19,12 @@ param ubuntuVersion string
 param vmSize string
 
 var hubRgName = 'rg-hub-ase-demo'
-var spokeRgName = 'rg-spoke-ase-demo'
+var spokeRgAseName = 'rg-spoke-ase-demo'
+var spokeRgDbName = 'rg-spoke-db-demo'
 
 var hubsuffix = uniqueString(hubRg.id)
-var spokeSuffix = uniqueString(spokeRg.id)
+var spokeAseSuffix = uniqueString(spokeAseRg.id)
+var spokeDbSuffix = uniqueString(spokeDBRg.id)
 
 // Vault contributor role, can change this in your template to lower priviledge role
 var vaultContributorRole = '/providers/Microsoft.Authorization/roleDefinitions/f25e0fa2-a7c8-4377-a976-54943a77a395'
@@ -32,8 +34,13 @@ resource hubRg 'Microsoft.Resources/resourceGroups@2021-04-01' = {
   location: location
 }
 
-resource spokeRg 'Microsoft.Resources/resourceGroups@2021-04-01' = {
-  name: spokeRgName
+resource spokeAseRg 'Microsoft.Resources/resourceGroups@2021-04-01' = {
+  name: spokeRgAseName
+  location: location
+}
+
+resource spokeDBRg 'Microsoft.Resources/resourceGroups@2021-04-01' = {
+  name: spokeRgDbName
   location: location
 }
 
@@ -70,7 +77,7 @@ module firewall 'modules/firewall/firewall.bicep' = {
 }
 
 module routeTable 'modules/networking/routeTable.bicep' = {
-  scope: resourceGroup(spokeRg.name)
+  scope: resourceGroup(spokeAseRg.name)
   name: 'routeTable'
   params: {
     fwPrivateIP: firewall.outputs.privateIp
@@ -80,12 +87,21 @@ module routeTable 'modules/networking/routeTable.bicep' = {
 }
 
 module vnetSpoke 'modules/networking/vnet.spoke.bicep' = {
-  scope: resourceGroup(spokeRg.name)
+  scope: resourceGroup(spokeAseRg.name)
   name: 'vnetSpoke'
   params: {
     location: location
     vnetConfiguration: vnetConfiguration.spoke
     routeTableId: routeTable.outputs.routeTableId
+  }
+}
+
+module vnetSpokeDB 'modules/networking/vnet.spoke.db.bicep' = {
+  scope: resourceGroup(spokeDBRg.name)
+  name: 'vnetSpokeDB'
+  params: {
+    location: location
+    vnetConfiguration: vnetConfiguration.spokeDB
   }
 }
 
@@ -98,27 +114,36 @@ module peeringhub 'modules/networking/peering.bicep' = {
   }
 }
 
-module peeringspoke 'modules/networking/peering.bicep' = {
-  scope: resourceGroup(spokeRg.name)
-  name: 'peeringspoke'
+module peeringspokeASE 'modules/networking/peering.bicep' = {
+  scope: resourceGroup(spokeAseRg.name)
+  name: 'peeringspokeASE'
   params: {
     peeringName: '${vnetSpoke.outputs.vnetName}/spoke-to-hub'
     remoteVnetId: vnetHub.outputs.vnetId
   }
 }
 
+module peeringspokeDB 'modules/networking/peering.bicep' = {
+  scope: resourceGroup(spokeAseRg.name)
+  name: 'peeringspokeDB'
+  params: {
+    peeringName: '${vnetSpokeDB.outputs.vnetName}/spoke-to-hub'
+    remoteVnetId: vnetHub.outputs.vnetId
+  }
+}
+
 module ase 'modules/ase/ase.bicep' = {
-  scope: resourceGroup(spokeRg.name)
+  scope: resourceGroup(spokeAseRg.name)
   name: 'ase'
   params: {
     location: location
     subnetId: vnetSpoke.outputs.subnets[0].id
-    suffix: spokeSuffix
+    suffix: spokeAseSuffix
   }
 }
 
 module dnsZone 'modules/DNS/privatezone.ase.bicep'= {
-  scope: resourceGroup(spokeRg.name)
+  scope: resourceGroup(spokeAseRg.name)
   name: 'dnsZone'
   params: {
     aseName: ase.outputs.aseName
@@ -133,24 +158,24 @@ module dnsZone 'modules/DNS/privatezone.ase.bicep'= {
 }
 
 module appServicePlan 'modules/webapp/appservice.bicep' = {
-  scope: resourceGroup(spokeRg.name)
+  scope: resourceGroup(spokeAseRg.name)
   name: 'appServicePlan'
   params: {
     aseId: ase.outputs.aseId    
     location: location
-    suffix: spokeSuffix
+    suffix: spokeAseSuffix
   }
 }
 
 module web 'modules/webapp/webapp.bicep' = {
-  scope: resourceGroup(spokeRg.name)
+  scope: resourceGroup(spokeAseRg.name)
   name: 'web'
   params: {
     appServiceId: appServicePlan.outputs.appserviceId
     aseName: ase.outputs.aseName
     aseId: ase.outputs.aseId
     location: location
-    suffix: spokeSuffix
+    suffix: spokeAseSuffix
   }
 }
 
@@ -163,7 +188,11 @@ module workspace 'modules/analytics/workspace.bicep' = {
   }
 }
 
-output webAppname string = web.outputs.webappname
+output weatherApiName string = web.outputs.weatherApiName
+output fibonacciApiName string = web.outputs.fibonacciApiName
+
 output gatewaySubnetId string = vnetSpoke.outputs.subnets[1].id
-output webAppFQDN string = web.outputs.webAppFQDN
-output spokeResourceGroupName string = spokeRgName
+output weatherApiAppFQDN string = web.outputs.weatherApiAppFQDN
+output fibonacciApiAppFQDN string = web.outputs.fibonacciApiAppFQDN
+
+output spokeResourceGroupName string = spokeRgAseName

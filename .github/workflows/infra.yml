@@ -44,15 +44,29 @@ jobs:
         name: Write Web App Name
         with:
           name: WEBAPI_WEATHER_NAME
-          value: ${{ steps.createResources.outputs.webappname }}
+          value: ${{ steps.createResources.outputs.weatherApiName }}
           pa_token: ${{ secrets.PA_TOKEN }}
 
       - uses: gliech/create-github-secret-action@v1
         name: Write Web App FQDN
         with:
-          name: WEBAPP_FQDN
-          value: ${{ steps.createResources.outputs.webAppFQDN }}
+          name: WEBAPP_WEATHERAPI_FQDN
+          value: ${{ steps.createResources.outputs.weatherApiAppFQDN }}
           pa_token: ${{ secrets.PA_TOKEN }}    
+
+      - uses: gliech/create-github-secret-action@v1
+        name: Write Web App Name
+        with:
+          name: WEBAPI_FIBONACCI_NAME
+          value: ${{ steps.createResources.outputs.fibonacciApiName }}
+          pa_token: ${{ secrets.PA_TOKEN }}
+
+      - uses: gliech/create-github-secret-action@v1
+        name: Write Web App FQDN
+        with:
+          name: WEBAPP_FIBONACCI_FQDN
+          value: ${{ steps.createResources.outputs.fibonacciApiAppFQDN }}
+          pa_token: ${{ secrets.PA_TOKEN }}              
 
       - uses: gliech/create-github-secret-action@v1
         name: Write Gateway Subnet ID

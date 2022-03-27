@@ -34,21 +34,27 @@ app.MapGet("/weatherforecast", () =>
 })
 .WithName("GetWeatherForecast");
 
-app.MapGet("/google", ([FromServices] IHttpClientFactory httpClientFactory) =>
+app.MapGet("/sessions",async (IHttpClientFactory factory) => 
 {
-    var httpClient = httpClientFactory.CreateClient();
-    var httpResponseMessage = httpClient.GetAsync("https://www.google.com").GetAwaiter().GetResult();
-
-    if (httpResponseMessage.IsSuccessStatusCode)
+    try
     {
-        string answer = httpResponseMessage.Content.ReadAsStringAsync().GetAwaiter().GetResult();
-        
-        return answer;
-    }
+        var httpClient = factory.CreateClient();
+        var httpResponseMessage = await httpClient.GetAsync("https://conferenceapi.azurewebsites.net/sessions");
 
-    return "Failed";
-})
-.WithName("GetGoogle");
+        if (httpResponseMessage.IsSuccessStatusCode) 
+        {
+            return await httpResponseMessage.Content.ReadAsStringAsync();
+        }
+
+        return $"ConferenceAPI Status Code: {httpResponseMessage.StatusCode}";
+    }
+    catch
+    {
+        return "Cannot reach API";
+    }
+});
+
+
 
 app.MapHealthChecks("/healthz");
 

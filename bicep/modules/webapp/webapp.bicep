@@ -4,7 +4,7 @@ param appServiceId string
 param aseId string
 param aseName string
 
-resource web 'Microsoft.Web/sites@2021-03-01' = {
+resource weatherApi 'Microsoft.Web/sites@2021-03-01' = {
   name: 'weatherapi-${suffix}'
   location: location
   properties: {
@@ -18,5 +18,22 @@ resource web 'Microsoft.Web/sites@2021-03-01' = {
   }
 }
 
-output webappname string = web.name
-output webAppFQDN string = '${web.name}.${aseName}.appserviceenvironment.net'
+resource fibonacciApi 'Microsoft.Web/sites@2021-03-01' = {
+  name: 'fibonacciApi-${suffix}'
+  location: location
+  properties: {
+    siteConfig: {
+      linuxFxVersion: 'DOTNETCORE|6.0'
+    }
+    serverFarmId: appServiceId
+    hostingEnvironmentProfile: {
+      id: aseId
+    }
+  }
+}
+
+output weatherApiName string = weatherApi.name
+output weatherApiAppFQDN string = '${weatherApi.name}.${aseName}.appserviceenvironment.net'
+
+output fibonacciApiName string = weatherApi.name
+output fibonacciApiAppFQDN string = '${weatherApi.name}.${aseName}.appserviceenvironment.net'

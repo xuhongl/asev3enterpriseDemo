@@ -51,6 +51,20 @@
                   }                  
                 ]
               }
+            },
+            "spokeDB": {
+              "name": "vnet-spoke-db",
+              "addressPrefixe": "11.0.0.0/16",
+              "subnets": [
+                {
+                  "name": "snet-prvEndpoint",
+                  "properties": {
+                    "addressPrefix": "11.0.1.0/24",
+                    "privateEndpointNetworkPolicies": "Disabled",
+                    "privateLinkServiceNetworkPolicies": "Enabled"
+                  }                    
+                }
+              ]
             }
         },
         "ubuntuVersion": {
