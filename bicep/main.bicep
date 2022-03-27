@@ -179,6 +179,15 @@ module web 'modules/webapp/webapp.bicep' = {
   }
 }
 
+module cache 'modules/cache/redis.bicep' = {
+  scope: resourceGroup(spokeDBRg.name)
+  name: 'cache'
+  params: {
+    location: location
+    suffix: spokeDbSuffix
+  }
+}
+
 module workspace 'modules/analytics/workspace.bicep' = {
   scope: resourceGroup(hubRg.name)
   name: 'workspace'
