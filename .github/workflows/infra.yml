@@ -41,28 +41,28 @@ jobs:
           parameters: ./bicep/main.parameters.json adminUsername=${{ secrets.VM_USERNAME }} adminPassword=${{ secrets.VM_PASSWORD }}
 
       - uses: gliech/create-github-secret-action@v1
-        name: Write Web App Name
+        name: Write Web App Name Weather API
         with:
           name: WEBAPI_WEATHER_NAME
           value: ${{ steps.createResources.outputs.weatherApiName }}
           pa_token: ${{ secrets.PA_TOKEN }}
 
       - uses: gliech/create-github-secret-action@v1
-        name: Write Web App FQDN
+        name: Write Web App FQDN Weather API
         with:
           name: WEBAPP_WEATHERAPI_FQDN
           value: ${{ steps.createResources.outputs.weatherApiAppFQDN }}
           pa_token: ${{ secrets.PA_TOKEN }}    
 
       - uses: gliech/create-github-secret-action@v1
-        name: Write Web App Name
+        name: Write Web App Name Fibonnaci API
         with:
           name: WEBAPI_FIBONACCI_NAME
           value: ${{ steps.createResources.outputs.fibonacciApiName }}
           pa_token: ${{ secrets.PA_TOKEN }}
 
       - uses: gliech/create-github-secret-action@v1
-        name: Write Web App FQDN
+        name: Write Web App FQDN Fibonnaci API
         with:
           name: WEBAPP_FIBONACCI_FQDN
           value: ${{ steps.createResources.outputs.fibonacciApiAppFQDN }}
