@@ -5,7 +5,7 @@ on:
 
 env:
   AZURE_WEATHER_API_DIRECTORY: ./src/WeatherApi
-  AZURE_FIBONACCI_API_DIRECTORY: ./src/Fibonacci
+  AZURE_FIBONACCI_API_DIRECTORY: ./src/FibonacciApi
   AZURE_WEBAPP_PACKAGE_PATH: package
 
 
