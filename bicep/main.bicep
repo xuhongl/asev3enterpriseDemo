@@ -124,7 +124,7 @@ module peeringspokeASE 'modules/networking/peering.bicep' = {
 }
 
 module peeringspokeDB 'modules/networking/peering.bicep' = {
-  scope: resourceGroup(spokeRgDB.name)
+  scope: resourceGroup(spokeDBRg.name)
   name: 'peeringspokeDB'
   params: {
     peeringName: '${vnetSpokeDB.outputs.vnetName}/spoke-to-hub'
