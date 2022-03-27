@@ -201,6 +201,7 @@ output weatherApiName string = web.outputs.weatherApiName
 output fibonacciApiName string = web.outputs.fibonacciApiName
 
 output gatewaySubnetId string = vnetSpoke.outputs.subnets[1].id
+
 output weatherApiAppFQDN string = web.outputs.weatherApiAppFQDN
 output fibonacciApiAppFQDN string = web.outputs.fibonacciApiAppFQDN
 

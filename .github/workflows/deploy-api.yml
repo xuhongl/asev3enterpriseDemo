@@ -39,7 +39,7 @@ jobs:
       - name: 'Run Azure webapp deploy'
         uses: azure/webapps-deploy@v2
         with: 
-          app-name: ${{ secrets.WEBAPP_WEATHERAPI_FQDN }}         
+          app-name: ${{ secrets.WEBAPI_WEATHER_NAME }}         
           package: '${{ env.AZURE_WEATHER_API_DIRECTORY}}/${{ env.AZURE_WEBAPP_PACKAGE_PATH }}'
 
   build-deploy-fibonacci-api:
@@ -70,5 +70,5 @@ jobs:
       - name: 'Run Azure webapp deploy'
         uses: azure/webapps-deploy@v2
         with: 
-          app-name: ${{ secrets.WEBAPP_WEATHERAPI_FQDN }}         
+          app-name: ${{ secrets.WEBAPI_FIBONACCI_NAME }}         
           package: '${{ env.AZURE_FIBONACCI_API_DIRECTORY}}/${{ env.AZURE_WEBAPP_PACKAGE_PATH }}'    
