@@ -90,7 +90,17 @@ resource appgw 'Microsoft.Network/ApplicationGateways@2020-06-01' = {
                         }
                     ]
                 }
-            }     
+            }
+            {
+                name: 'fibonacciApiPool'
+                properties: {
+                    backendAddresses: [
+                        {
+                            fqdn: fibonacciApiFQDN
+                        }
+                    ]
+                }
+            }                  
         ]
         backendHttpSettingsCollection: [
             {
@@ -105,7 +115,20 @@ resource appgw 'Microsoft.Network/ApplicationGateways@2020-06-01' = {
                         id: '${appGwId}/probes/weatherApiProbe'
                     }
                 }
-            }                        
+            }
+            {
+                name: 'https-settings-fibonacciApi'
+                properties: {
+                    port: 443
+                    protocol: 'Https'
+                    cookieBasedAffinity: 'Disabled'
+                    pickHostNameFromBackendAddress: true
+                    requestTimeout: 20
+                    probe: {                                                
+                        id: '${appGwId}/probes/fibonacciApiProbe'
+                    }
+                }
+            }                                      
         ]
         httpListeners: [
             {
@@ -127,7 +150,27 @@ resource appgw 'Microsoft.Network/ApplicationGateways@2020-06-01' = {
                     protocol: 'Https'
                     requireServerNameIndication: true
                 }
-            }                  
+            }
+            {
+                name: 'https-listener-fibonacciApi'
+                properties: {
+                    frontendIPConfiguration: {
+                        id: '${appGwId}/frontendIPConfigurations/appGwPublicFrontendIp'
+                    }
+                    frontendPort: {
+                        id: '${appGwId}/frontendPorts/port_443'
+                    }
+                    sslCertificate: {
+                        id: '${appGwId}/sslCertificates/wild'
+                    }
+                    hostName: customDomainFibonacciApiFQDN
+                    hostNames: [
+
+                    ]
+                    protocol: 'Https'
+                    requireServerNameIndication: true
+                }
+            }                              
         ]
         requestRoutingRules: [
             {
@@ -144,7 +187,22 @@ resource appgw 'Microsoft.Network/ApplicationGateways@2020-06-01' = {
                         id: '${appGwId}/backendHttpSettingsCollection/https-settings-weatherApi'
                     }
                 }
-            }                              
+            }
+            {
+                name: 'https-rule-fibonacci-api'
+                properties: {
+                    ruleType: 'Basic'
+                    httpListener: {
+                        id: '${appGwId}/httpListeners/https-listener-fibonacciApi'
+                    }
+                    backendAddressPool: {
+                        id: '${appGwId}/backendAddressPools/fibonacciApiPool'
+                    }
+                    backendHttpSettings: {
+                        id: '${appGwId}/backendHttpSettingsCollection/https-settings-fibonacciApi'
+                    }
+                }
+            }                                          
         ]
         probes: [
             {
@@ -159,7 +217,20 @@ resource appgw 'Microsoft.Network/ApplicationGateways@2020-06-01' = {
                     minServers: 0
                     match: {}
                 }
-            }                
+            }
+            {
+                name: 'fibonacciApiProbe'
+                properties: {
+                    protocol: 'Https'                    
+                    path: '/healthz'
+                    interval: 30
+                    timeout: 30
+                    unhealthyThreshold: 3
+                    pickHostNameFromBackendHttpSettings: true
+                    minServers: 0
+                    match: {}
+                }
+            }                          
         ]
         enableHttp2: false
         webApplicationFirewallConfiguration: {
