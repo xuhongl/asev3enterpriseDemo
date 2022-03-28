@@ -188,6 +188,21 @@ module cache 'modules/cache/redis.bicep' = {
   }
 }
 
+module privateEndpointCache 'modules/DNS/privatezone.redis.bicep' = {
+  scope: resourceGroup(spokeDBRg.name)
+  name: 'privateEndpointCache'
+  params: {
+    cacheId: cache.outputs.id    
+    vnetNameHub: vnetHub.outputs.vnetName    
+    hubVnetId: vnetHub.outputs.vnetId
+    location: location
+    privateIpRunner: runner.outputs.privateIps
+    runnerVmName: runner.outputs.vmName
+    spokeDbVnetId: vnetSpokeDB.outputs.vnetId
+    vnetNameSpokeDB: vnetSpokeDB.outputs.vnetName    
+  }
+}
+
 module workspace 'modules/analytics/workspace.bicep' = {
   scope: resourceGroup(hubRg.name)
   name: 'workspace'
