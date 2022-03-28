@@ -122,7 +122,7 @@ resource appgw 'Microsoft.Network/ApplicationGateways@2020-06-01' = {
                     }
                     hostName: customDomainWeatherApiFQDN
                     hostNames: [
-                        
+
                     ]
                     protocol: 'Https'
                     requireServerNameIndication: true
@@ -131,7 +131,7 @@ resource appgw 'Microsoft.Network/ApplicationGateways@2020-06-01' = {
         ]
         requestRoutingRules: [
             {
-                name: 'https-rule'
+                name: 'https-rule-weather-api'
                 properties: {
                     ruleType: 'Basic'
                     httpListener: {
