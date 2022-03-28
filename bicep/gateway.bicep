@@ -121,6 +121,9 @@ resource appgw 'Microsoft.Network/ApplicationGateways@2020-06-01' = {
                         id: '${appGwId}/sslCertificates/wild'
                     }
                     hostName: customDomainWeatherApiFQDN
+                    hostNames: [
+                        
+                    ]
                     protocol: 'Https'
                     requireServerNameIndication: true
                 }
