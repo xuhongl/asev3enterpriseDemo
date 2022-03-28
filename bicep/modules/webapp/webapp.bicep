@@ -35,5 +35,5 @@ resource fibonacciApi 'Microsoft.Web/sites@2021-03-01' = {
 output weatherApiName string = weatherApi.name
 output weatherApiAppFQDN string = '${weatherApi.name}.${aseName}.appserviceenvironment.net'
 
-output fibonacciApiName string = weatherApi.name
-output fibonacciApiAppFQDN string = '${weatherApi.name}.${aseName}.appserviceenvironment.net'
+output fibonacciApiName string = fibonacciApi.name
+output fibonacciApiAppFQDN string = '${fibonacciApi.name}.${aseName}.appserviceenvironment.net'
