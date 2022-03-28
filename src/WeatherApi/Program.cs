@@ -34,28 +34,6 @@ app.MapGet("/weatherforecast", () =>
 })
 .WithName("GetWeatherForecast");
 
-app.MapGet("/sessions",async (IHttpClientFactory factory) => 
-{
-    try
-    {
-        var httpClient = factory.CreateClient();
-        var httpResponseMessage = await httpClient.GetAsync("https://conferenceapi.azurewebsites.net/sessions");
-
-        if (httpResponseMessage.IsSuccessStatusCode) 
-        {
-            return await httpResponseMessage.Content.ReadAsStringAsync();
-        }
-
-        return $"ConferenceAPI Status Code: {httpResponseMessage.StatusCode}";
-    }
-    catch
-    {
-        return "Cannot reach API";
-    }
-});
-
-
-
 app.MapHealthChecks("/healthz");
 
 app.Run();
