@@ -13,6 +13,13 @@
         },
         "customDomainWeatherApiFQDN": {
             "value": "__customDomainWeatherApiFQDN__"
-        }
+        },
+        "fibonacciApiFQDN": {
+            "value": "__fibonacciApiFQDN__"
+        },
+        "customDomainFibonacciApiFQDN": {
+            "value": "__customDomainFibonacciApiFQDN__"
+        }        
+        
     }
 }

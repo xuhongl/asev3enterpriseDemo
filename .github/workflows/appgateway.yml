@@ -37,6 +37,8 @@ jobs:
           gwSubnetId: ${{ secrets.GATEWAY_SUBNET_ID }}
           weatherApiFQDN: ${{ secrets.WEBAPP_FQDN }}
           customDomainWeatherApiFQDN: ${{ secrets.CUSTOM_DOMAIN_WEATHER_API }}
+          fibonacciApiFQDN: ${{ secrets.WEBAPP_FIBONACCI_FQDN }}
+          customDomainFibonacciApiFQDN: ${{ secrets.CUSTOM_DOMAIN_FIBONACCI_API }}
 
       - name: deploy
         id: createResources
