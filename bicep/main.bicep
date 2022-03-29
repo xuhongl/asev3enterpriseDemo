@@ -64,7 +64,7 @@ module runner 'modules/compute/runner.bicep' = {
 }
 
 module firewall 'modules/firewall/firewall.bicep' = {
-  scope: resourceGroup(hubRg.name)  
+  scope: resourceGroup(hubRg.name)
   name: 'firewall'
   params: {
     location: location
@@ -111,14 +111,14 @@ module peeringhub 'modules/networking/peering.bicep' = {
   }
 }
 
-module peeringspokeASE 'modules/networking/peering.bicep' = {
-  scope: resourceGroup(spokeAseRg.name)
-  name: 'peeringspokeASE'
-  params: {
-    peeringName: '${vnetSpoke.outputs.vnetName}/spoke-to-hub'
-    remoteVnetId: vnetHub.outputs.vnetId
-  }
-}
+// module peeringspokeASE 'modules/networking/peering.bicep' = {
+//   scope: resourceGroup(spokeAseRg.name)
+//   name: 'peeringspokeASE'
+//   params: {
+//     peeringName: '${vnetSpoke.outputs.vnetName}/spoke-to-hub'
+//     remoteVnetId: vnetHub.outputs.vnetId
+//   }
+// }
 
 // module peeringspokeDB 'modules/networking/peering.bicep' = {
 //   scope: resourceGroup(spokeDBRg.name)
@@ -158,7 +158,7 @@ module appServicePlan 'modules/webapp/appservice.bicep' = {
   scope: resourceGroup(spokeAseRg.name)
   name: 'appServicePlan'
   params: {
-    aseId: ase.outputs.aseId    
+    aseId: ase.outputs.aseId
     location: location
     suffix: spokeAseSuffix
   }
@@ -191,15 +191,15 @@ module privateEndpointCache 'modules/DNS/privatezone.redis.bicep' = {
   scope: resourceGroup(spokeDBRg.name)
   name: 'privateEndpointCache'
   params: {
-    cacheId: cache.outputs.id    
-    vnetNameHub: vnetHub.outputs.vnetName    
+    cacheId: cache.outputs.id
+    vnetNameHub: vnetHub.outputs.vnetName
     hubVnetId: vnetHub.outputs.vnetId
     location: location
     privateIpRunner: runner.outputs.privateIps
     runnerVmName: runner.outputs.vmName
     spokeDbVnetId: vnetSpokeDB.outputs.vnetId
     spokeDBSubnetId: vnetSpokeDB.outputs.subnets[0].id
-    vnetNameSpokeDB: vnetSpokeDB.outputs.vnetName    
+    vnetNameSpokeDB: vnetSpokeDB.outputs.vnetName
     spokeASEVnetId: vnetSpoke.outputs.vnetId
     vnetNameSpokeASE: vnetSpoke.outputs.vnetName
 
