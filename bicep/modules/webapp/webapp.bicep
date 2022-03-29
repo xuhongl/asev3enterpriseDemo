@@ -8,7 +8,9 @@ param cacheId string
 param cacheApiVersion string
 
 
-var cacheCnxString = listKey(cacheId, cacheApiVersion).primaryKey
+//var cacheCnxString = listKey(cacheId, cacheApiVersion).primaryKey
+
+var cacheCnxString = 'na'
 
 resource weatherApi 'Microsoft.Web/sites@2021-03-01' = {
   name: 'weatherapi-${suffix}'
