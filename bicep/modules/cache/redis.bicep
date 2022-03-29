@@ -13,4 +13,5 @@ resource cache 'Microsoft.Cache/redis@2021-06-01' = {
   }
 }
 
+output id string = cache.id
 output cacheName string = cache.name
