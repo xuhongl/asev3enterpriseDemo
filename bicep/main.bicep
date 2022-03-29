@@ -79,7 +79,7 @@ module routeTable 'modules/networking/routeTable.bicep' = {
   params: {
     fwPrivateIP: firewall.outputs.privateIp
     fwPublicIP: firewall.outputs.publicIp
-    spokeDbSubnetCIDR: vnetSpokeDB.outputs.subnets[0].addressPrefixe
+    spokeDbSubnetCIDR: vnetConfiguration.spokeDB.addressPrefixe
     location: location
   }
 }
