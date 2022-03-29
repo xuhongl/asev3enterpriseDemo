@@ -4,6 +4,12 @@ param appServiceId string
 param aseId string
 param aseName string
 
+param cacheId string
+param cacheApiVersion string
+
+
+var cacheCnxString = listKey(cacheId, cacheApiVersion).primaryKey
+
 resource weatherApi 'Microsoft.Web/sites@2021-03-01' = {
   name: 'weatherapi-${suffix}'
   location: location
@@ -23,8 +29,14 @@ resource fibonacciApi 'Microsoft.Web/sites@2021-03-01' = {
   location: location
   properties: {
     siteConfig: {
-      linuxFxVersion: 'DOTNETCORE|6.0'
-    }
+      linuxFxVersion: 'DOTNETCORE|6.0'      
+      appSettings: [
+        {
+          name: 'RedisCnxString'
+          value: cacheCnxString
+        }
+      ]
+    }      
     serverFarmId: appServiceId
     hostingEnvironmentProfile: {
       id: aseId

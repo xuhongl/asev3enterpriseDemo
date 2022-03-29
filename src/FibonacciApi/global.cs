@@ -1,2 +1,2 @@
 global using FibonacciApi.Repository;
-global using FibonacciApi.Models;
+global using Newtonsoft.Json;

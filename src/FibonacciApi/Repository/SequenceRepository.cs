@@ -2,37 +2,75 @@ using StackExchange.Redis;
 
 namespace FibonacciApi.Repository;
 
-public class SequenceRepository 
+public class SequenceRepository : ISequenceRepository
 {
     private IDatabase _database;
+    private readonly ILogger<SequenceRepository> _logger;
 
-    private async Task<IDatabase> Database() => await CreateConnectionAsync();
+    private bool _cacheAvailable = false;
 
-    public SequenceRepository(IConfiguration configuration)
+    public SequenceRepository(IConfiguration configuration, ILogger<SequenceRepository> logger)
     {
-        var connection = ConnectionMultiplexer.Connect(configuration["RedisCnxString"]);
-        _database = connection.GetDatabase();
+
+        _logger = logger;
+
+        try
+        {
+#if DEBUG        
+            var connection = ConnectionMultiplexer.Connect("localhost:6379");
+#else         
+            var connection = ConnectionMultiplexer.Connect(configuration["RedisCnxString"]);
+#endif        
+            _database = connection.GetDatabase();   
+
+            _cacheAvailable = true;         
+
+        }
+        catch (System.Exception ex)
+        {
+            _logger.LogError("Cannot create connection",ex.Message);      
+        }
+
     }
 
-    private async Task<Sequence?> GetSequenceAsync(int len)
+    public async Task<List<long>?> GetSequenceAsync(long len)
     {
-        var value = await _database.StringGetAsync(new RedisKey(len.ToString()));
+        try
+        {
+            if (!_cacheAvailable)
+              return null;
 
-        return string.IsNullOrEmpty(value.ToString()) 
-               ? null 
-               : JsonConvert.Parse();
+            _logger.LogDebug($"Get value len {len} from cache");
+
+            var value = await _database.StringGetAsync(new RedisKey(len.ToString()));
+
+            return string.IsNullOrEmpty(value.ToString()) 
+                   ? null
+                   : JsonConvert.DeserializeObject<List<long>>(value.ToString());            
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError("Cannot get value from cache",ex.Message);
+            return null;
+        }
     }
 
-    // private async Task<Sequence> GetSequenceAsync(int len)
-    // {
-    //     try
-    //     {
-    //         _database.String
-    //     catch (System.Exception)
-    //     {
-            
-    //         throw;
-    //     }
-    // }
+    public async Task SetSequenceValue(long len, List<long> values)
+    {
+        try
+        {
+
+            if (!_cacheAvailable)
+              return;
+
+            _logger.LogDebug($"Set value len {len} in cache");
+            await _database.StringSetAsync(new RedisKey(len.ToString()),
+                                           new RedisValue(JsonConvert.SerializeObject(values)));
+        }
+        catch (System.Exception ex)
+        {
+            _logger.LogError("Cannot set value in cache",ex.Message);
+        }
+    }
 }
 
