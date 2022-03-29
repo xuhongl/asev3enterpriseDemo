@@ -7,6 +7,8 @@ public class SequenceRepository : ISequenceRepository
     private IDatabase _database;
     private readonly ILogger<SequenceRepository> _logger;
 
+    private readonly ConnectionMultiplexer _connection;
+
     private bool _cacheAvailable = false;
 
     public SequenceRepository(IConfiguration configuration, ILogger<SequenceRepository> logger)
@@ -17,11 +19,11 @@ public class SequenceRepository : ISequenceRepository
         try
         {
 #if DEBUG        
-            var connection = ConnectionMultiplexer.Connect("localhost:6379");
+            _connection = ConnectionMultiplexer.Connect("localhost:6379");
 #else         
-            var connection = ConnectionMultiplexer.Connect(configuration["RedisCnxString"]);
+            _connection = ConnectionMultiplexer.Connect(configuration["RedisCnxString"]);
 #endif        
-            _database = connection.GetDatabase();   
+            _database = _connection.GetDatabase();   
 
             _cacheAvailable = true;         
 
@@ -33,7 +35,7 @@ public class SequenceRepository : ISequenceRepository
 
     }
 
-    public async Task<List<long>?> GetSequenceAsync(long len)
+    public async Task<Sequence> GetSequenceAsync(long len)
     {
         try
         {
@@ -44,9 +46,10 @@ public class SequenceRepository : ISequenceRepository
 
             var value = await _database.StringGetAsync(new RedisKey(len.ToString()));
 
-            return string.IsNullOrEmpty(value.ToString()) 
-                   ? null
-                   : JsonConvert.DeserializeObject<List<long>>(value.ToString());            
+            if (value.HasValue)
+                return JsonConvert.DeserializeObject<Sequence>(value.ToString());
+
+            return null;
         }
         catch (Exception ex)
         {
@@ -55,7 +58,7 @@ public class SequenceRepository : ISequenceRepository
         }
     }
 
-    public async Task SetSequenceValue(long len, List<long> values)
+    public async Task SetSequenceValue(long len, Sequence values)
     {
         try
         {
@@ -69,6 +72,26 @@ public class SequenceRepository : ISequenceRepository
         }
         catch (System.Exception ex)
         {
+            _logger.LogError("Cannot set value in cache",ex.Message);
+        }
+    }
+
+    public async Task ClearCacheAsync()
+    {
+        try
+        {
+            var endpoints = _connection.GetEndPoints();
+            var server = _connection.GetServer(endpoints.First());
+
+            var keys = server.Keys();
+
+            foreach (var key in keys)
+            {
+                await _database.KeyDeleteAsync(key);
+            }
+        }
+        catch (System.Exception ex)
+        {            
             _logger.LogError("Cannot set value in cache",ex.Message);
         }
     }

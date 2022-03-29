@@ -26,9 +26,6 @@ var hubsuffix = uniqueString(hubRg.id)
 var spokeAseSuffix = uniqueString(spokeAseRg.id)
 var spokeDbSuffix = uniqueString(spokeDBRg.id)
 
-// Vault contributor role, can change this in your template to lower priviledge role
-var vaultContributorRole = '/providers/Microsoft.Authorization/roleDefinitions/f25e0fa2-a7c8-4377-a976-54943a77a395'
-
 resource hubRg 'Microsoft.Resources/resourceGroups@2021-04-01' = {
   name: hubRgName
   location: location
@@ -123,14 +120,14 @@ module peeringspokeASE 'modules/networking/peering.bicep' = {
   }
 }
 
-module peeringspokeDB 'modules/networking/peering.bicep' = {
-  scope: resourceGroup(spokeDBRg.name)
-  name: 'peeringspokeDB'
-  params: {
-    peeringName: '${vnetSpokeDB.outputs.vnetName}/spoke-to-hub'
-    remoteVnetId: vnetHub.outputs.vnetId
-  }
-}
+// module peeringspokeDB 'modules/networking/peering.bicep' = {
+//   scope: resourceGroup(spokeDBRg.name)
+//   name: 'peeringspokeDB'
+//   params: {
+//     peeringName: '${vnetSpokeDB.outputs.vnetName}/spoke-to-hub'
+//     remoteVnetId: vnetHub.outputs.vnetId
+//   }
+// }
 
 module ase 'modules/ase/ase.bicep' = {
   scope: resourceGroup(spokeAseRg.name)
