@@ -8,7 +8,7 @@
 
 # Introduction
 
-The purpose of this demo is to illustrate a common setup leveraging App Service Environment v3 with the hub and spoke networking architecture.
+The purpose of this demo is to illustrate a common setup leveraging App Service Environment v3 with an hub and multiple spokes.
 
 The App Service Environment will be of type internal, all ingress will be thru Azure Application Gateway with WAF and all egress thru the Azure Firewall.
 

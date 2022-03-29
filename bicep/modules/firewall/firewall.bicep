@@ -51,6 +51,9 @@ resource defaultApplicationGroups 'Microsoft.Network/firewallPolicies/ruleCollec
 
 resource ruleCollectionGroups 'Microsoft.Network/firewallPolicies/ruleCollectionGroups@2021-05-01' = {
   name: '${firewallPolicies.name}/DefaultNetworkRuleCollectionGroup'  
+  dependsOn: [
+    defaultApplicationGroups
+  ]
   properties: {
     priority: 200
     ruleCollections: [
