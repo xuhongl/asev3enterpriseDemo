@@ -1,6 +1,6 @@
 <mxfile host="65bd71144e">
     <diagram id="5NqFW7M_PTOesCqyDeyE" name="Page-1">
-        <mxGraphModel dx="1500" dy="782" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+        <mxGraphModel dx="1691" dy="782" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="850" pageHeight="1100" background="#000000" math="0" shadow="0">
             <root>
                 <mxCell id="0"/>
                 <mxCell id="1" parent="0"/>
@@ -13,15 +13,17 @@
                 <mxCell id="5" value="Application Gateway with&lt;br&gt;WAF" style="aspect=fixed;html=1;points=[];align=center;image;fontSize=12;image=img/lib/azure2/networking/Application_Gateways.svg;" parent="1" vertex="1">
                     <mxGeometry x="161.23" y="477.5" width="64" height="64" as="geometry"/>
                 </mxCell>
-                <mxCell id="15" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=none;" parent="1" vertex="1">
-                    <mxGeometry x="184" y="24" width="440" height="260" as="geometry"/>
-                </mxCell>
-                <mxCell id="40" style="edgeStyle=none;html=1;entryX=0.38;entryY=0.02;entryDx=0;entryDy=0;entryPerimeter=0;fontSize=17;" parent="1" source="6" target="36" edge="1">
+                <mxCell id="62" style="edgeStyle=none;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1">
                     <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="628" y="157" as="sourcePoint"/>
+                        <mxPoint x="1063" y="377" as="targetPoint"/>
                         <Array as="points">
-                            <mxPoint x="-32" y="144"/>
+                            <mxPoint x="1063" y="157"/>
                         </Array>
                     </mxGeometry>
+                </mxCell>
+                <mxCell id="15" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=none;" parent="1" vertex="1">
+                    <mxGeometry x="184" y="24" width="440" height="260" as="geometry"/>
                 </mxCell>
                 <mxCell id="6" value="Azure Firewall" style="aspect=fixed;html=1;points=[];align=center;image;fontSize=12;image=img/lib/azure2/networking/Firewalls.svg;" parent="1" vertex="1">
                     <mxGeometry x="222" y="114" width="71" height="60" as="geometry"/>
@@ -92,7 +94,7 @@
                     </mxGeometry>
                 </mxCell>
                 <mxCell id="41" value="1" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fontSize=17;fillColor=#99CCFF;fontColor=#000000;fontStyle=1" parent="1" vertex="1">
-                    <mxGeometry x="-7" y="366" width="30" height="30" as="geometry"/>
+                    <mxGeometry x="-7" y="473" width="30" height="30" as="geometry"/>
                 </mxCell>
                 <mxCell id="42" value="2" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fontSize=17;fillColor=#99CCFF;fontColor=#000000;fontStyle=1" parent="1" vertex="1">
                     <mxGeometry x="263" y="467" width="30" height="30" as="geometry"/>
@@ -100,11 +102,8 @@
                 <mxCell id="44" value="3" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fontSize=17;fillColor=#99CCFF;fontColor=#000000;fontStyle=1" parent="1" vertex="1">
                     <mxGeometry x="382" y="289" width="30" height="30" as="geometry"/>
                 </mxCell>
-                <mxCell id="45" value="4" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fontSize=17;fillColor=#99CCFF;fontColor=#000000;fontStyle=1" parent="1" vertex="1">
-                    <mxGeometry x="90" y="105" width="30" height="30" as="geometry"/>
-                </mxCell>
                 <mxCell id="46" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=none;" vertex="1" parent="1">
-                    <mxGeometry x="767" y="374" width="578" height="306" as="geometry"/>
+                    <mxGeometry x="858" y="374" width="402" height="306" as="geometry"/>
                 </mxCell>
                 <mxCell id="54" value="" style="group" vertex="1" connectable="0" parent="1">
                     <mxGeometry x="923" y="641" width="300.5" height="27" as="geometry"/>
@@ -116,10 +115,22 @@
                     <mxGeometry x="27.5" y="3" width="273" height="24" as="geometry"/>
                 </mxCell>
                 <mxCell id="49" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=none;" vertex="1" parent="1">
-                    <mxGeometry x="913.75" y="401" width="296" height="209" as="geometry"/>
+                    <mxGeometry x="977" y="443" width="177" height="147" as="geometry"/>
                 </mxCell>
                 <mxCell id="57" value="Azure Private DNS&lt;br&gt;Zone for Redis" style="aspect=fixed;html=1;points=[];align=center;image;fontSize=12;image=img/lib/azure2/networking/DNS_Zones.svg;fillColor=#E8E8E8;" vertex="1" parent="1">
                     <mxGeometry x="1024" y="691" width="64" height="64" as="geometry"/>
+                </mxCell>
+                <mxCell id="58" value="Azure&amp;nbsp;&lt;br&gt;Redis&lt;br&gt;Cache" style="aspect=fixed;html=1;points=[];align=center;image;fontSize=12;image=img/lib/azure2/databases/Cache_Redis.svg;" vertex="1" parent="1">
+                    <mxGeometry x="1301" y="483.5" width="64" height="52" as="geometry"/>
+                </mxCell>
+                <mxCell id="59" value="Azure Redis&lt;br&gt;Cache&lt;br&gt;Private Endpoint" style="aspect=fixed;html=1;points=[];align=center;image;fontSize=12;image=img/lib/azure2/networking/Private_Endpoint.svg;" vertex="1" parent="1">
+                    <mxGeometry x="1039" y="484.5" width="54.55" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="65" value="5" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fontSize=17;fillColor=#99CCFF;fontColor=#000000;fontStyle=1" vertex="1" parent="1">
+                    <mxGeometry x="856" y="166" width="30" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="68" value="5" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fontSize=17;fillColor=#99CCFF;fontColor=#000000;fontStyle=1" vertex="1" parent="1">
+                    <mxGeometry x="-7" y="523" width="30" height="30" as="geometry"/>
                 </mxCell>
             </root>
         </mxGraphModel>

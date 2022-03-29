@@ -29,9 +29,30 @@ resource firewallPolicies 'Microsoft.Network/firewallPolicies@2021-05-01' = {
   }
 }
 
-resource ruleCollectionGroups 'Microsoft.Network/firewallPolicies/ruleCollectionGroups@2021-05-01' = {
-  name: '${firewallPolicies.name}/DefaultApplicationRuleCollectionGroup'  
+resource defaultApplicationGroups 'Microsoft.Network/firewallPolicies/ruleCollectionGroups@2021-05-01' = {
+  name: '${firewallPolicies.name}/DefaultApplicationRuleCollectionGroup'
   properties: {
+    priority: 300
+    ruleCollections: [
+      {
+        ruleCollectionType: 'FirewallPolicyFilterRuleCollection'
+        action: {
+          type: 'Deny'
+        }
+        rules: [
+          
+        ]
+        name: 'Deny'
+        priority: 100
+      }
+    ]
+  }
+}
+
+resource ruleCollectionGroups 'Microsoft.Network/firewallPolicies/ruleCollectionGroups@2021-05-01' = {
+  name: '${firewallPolicies.name}/DefaultNetworkRuleCollectionGroup'  
+  properties: {
+    priority: 200
     ruleCollections: [
       {
         ruleCollectionType: 'FirewallPolicyFilterRuleCollection'
