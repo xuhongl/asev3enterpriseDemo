@@ -103,12 +103,21 @@ module vnetSpokeDB 'modules/networking/vnet.spoke.db.bicep' = {
   }
 }
 
-module peeringhub 'modules/networking/peering.bicep' = {
+module peeringhubToSpoke 'modules/networking/peering.bicep' = {
   scope: resourceGroup(hubRg.name)
-  name: 'peeringhub'
+  name: 'peeringhubToSpoke'
   params: {
     peeringName: '${vnetHub.outputs.vnetName}/hub-to-spoke'
     remoteVnetId: vnetSpoke.outputs.vnetId
+  }
+}
+
+module peeringhubToDb 'modules/networking/peering.bicep' = {
+  scope: resourceGroup(hubRg.name)
+  name: 'peeringhubToDb'
+  params: {
+    peeringName: '${vnetHub.outputs.vnetName}/hub-to-spoke-db'
+    remoteVnetId: vnetSpokeDB.outputs.vnetId
   }
 }
 
