@@ -5,6 +5,7 @@ param hubVnetId string
 param spokeASEVnetId string
 param vnetNameSpokeASE string
 
+param spokeDBSubnetId string
 param spokeDbVnetId string
 param vnetNameSpokeDB string
 param vnetNameHub string
@@ -21,7 +22,7 @@ resource privateEndpoint 'Microsoft.Network/privateEndpoints@2021-05-01' = {
   location: location
   properties: {
     subnet: {
-      id: spokeDbVnetId
+      id: spokeDBSubnetId
     }
     privateLinkServiceConnections: [
       {

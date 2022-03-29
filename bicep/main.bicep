@@ -199,9 +199,11 @@ module privateEndpointCache 'modules/DNS/privatezone.redis.bicep' = {
     privateIpRunner: runner.outputs.privateIps
     runnerVmName: runner.outputs.vmName
     spokeDbVnetId: vnetSpokeDB.outputs.vnetId
+    spokeDBSubnetId: vnetSpokeDB.outputs.subnets[0].id
     vnetNameSpokeDB: vnetSpokeDB.outputs.vnetName    
     spokeASEVnetId: vnetSpoke.outputs.vnetId
     vnetNameSpokeASE: vnetSpoke.outputs.vnetName
+
   }
 }
 
