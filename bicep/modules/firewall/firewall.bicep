@@ -2,6 +2,9 @@ param location string
 param suffix string
 param subnetId string
 
+param subnetASECIDR string
+param subnetSpokeDBCIDR string
+
 resource pip 'Microsoft.Network/publicIPAddresses@2021-05-01' = {
   name: 'pip-fw-${suffix}'
   location: location
@@ -24,6 +27,49 @@ resource firewallPolicies 'Microsoft.Network/firewallPolicies@2021-05-01' = {
     }
     threatIntelMode: 'Alert'
   }
+}
+
+resource ruleCollectionGroups 'Microsoft.Network/firewallPolicies/ruleCollectionGroups@2021-05-01' = {
+  name: '${firewallPolicies.name}/DefaultApplicationRuleCollectionGroup'  
+  properties: {
+    ruleCollections: [
+      {
+        ruleCollectionType: 'FirewallPolicyFilterRuleCollection'
+        action: {
+          type: 'Allow'
+        }
+        priority: 100
+        rules: [
+          {            
+            ruleType: 'NetworkRule'
+            name: 'toPrivateSpokeDB'            
+            ipProtocols: [
+              'Any'
+            ]
+            sourceAddresses: [
+              subnetASECIDR
+            ]
+            sourceIpGroups: [
+              
+            ]
+            destinationAddresses: [
+              subnetSpokeDBCIDR
+            ]
+            destinationIpGroups: [
+              
+            ]
+            destinationFqdns: [
+              
+            ]
+            destinationPorts: [
+              '*'
+            ]
+          }
+        ]
+      }
+    ]
+  }
+
 }
 
 resource firewall 'Microsoft.Network/azureFirewalls@2021-05-01' = {

@@ -1,7 +1,6 @@
 param location string
 param fwPrivateIP string
 param fwPublicIP string
-param spokeDbSubnetCIDR string
 
 resource aseRouteTable 'Microsoft.Network/routeTables@2021-05-01' = {
   name: 'rt-ase'
@@ -15,15 +14,7 @@ resource aseRouteTable 'Microsoft.Network/routeTables@2021-05-01' = {
           nextHopType: 'VirtualAppliance'
           nextHopIpAddress: fwPrivateIP
         }
-      }
-      {
-        name: 'ase-to-spoke'
-        properties: {
-          addressPrefix: spokeDbSubnetCIDR
-          nextHopType: 'VirtualAppliance'
-          nextHopIpAddress: fwPrivateIP
-        }
-      }      
+      }     
       {
         name: 'fw-to-internet'
         properties: {

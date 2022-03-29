@@ -70,6 +70,8 @@ module firewall 'modules/firewall/firewall.bicep' = {
     location: location
     subnetId: vnetHub.outputs.subnets[0].id
     suffix: hubsuffix
+    subnetASECIDR: vnetConfiguration.spoke.subnets[0].properties.addressPrefix
+    subnetSpokeDBCIDR: vnetConfiguration.spokeDB.addressPrefixe
   }
 }
 
@@ -79,7 +81,6 @@ module routeTable 'modules/networking/routeTable.bicep' = {
   params: {
     fwPrivateIP: firewall.outputs.privateIp
     fwPublicIP: firewall.outputs.publicIp
-    spokeDbSubnetCIDR: vnetConfiguration.spokeDB.addressPrefixe
     location: location
   }
 }
