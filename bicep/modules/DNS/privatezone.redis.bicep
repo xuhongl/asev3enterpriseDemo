@@ -1,6 +1,10 @@
 param cacheId string
 param location string
 param hubVnetId string
+
+param spokeASEVnetId string
+param vnetNameSpokeASE string
+
 param spokeDbVnetId string
 param vnetNameSpokeDB string
 param vnetNameHub string
@@ -56,11 +60,11 @@ resource networkLinkHub 'Microsoft.Network/privateDnsZones/virtualNetworkLinks@2
 }
 
 resource networkLinkSpoke 'Microsoft.Network/privateDnsZones/virtualNetworkLinks@2020-06-01' = {
-  name: '${privateZone.name}/${vnetNameSpokeDB}'
+  name: '${privateZone.name}/${vnetNameSpokeASE}'
   location: 'global'
   properties: {
     virtualNetwork: {
-      id: spokeDbVnetId
+      id: spokeASEVnetId
     }
     registrationEnabled: false
   }

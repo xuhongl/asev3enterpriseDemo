@@ -200,6 +200,8 @@ module privateEndpointCache 'modules/DNS/privatezone.redis.bicep' = {
     runnerVmName: runner.outputs.vmName
     spokeDbVnetId: vnetSpokeDB.outputs.vnetId
     vnetNameSpokeDB: vnetSpokeDB.outputs.vnetName    
+    spokeASEVnetId: vnetSpoke.outputs.vnetId
+    vnetNameSpokeASE: vnetSpoke.outputs.vnetName
   }
 }
 
