@@ -1,6 +1,6 @@
 <mxfile host="65bd71144e">
     <diagram id="5NqFW7M_PTOesCqyDeyE" name="Page-1">
-        <mxGraphModel dx="1417" dy="782" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="850" pageHeight="1100" background="#000000" math="0" shadow="0">
+        <mxGraphModel dx="1858" dy="869" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="850" pageHeight="1100" background="#000000" math="0" shadow="0">
             <root>
                 <mxCell id="0"/>
                 <mxCell id="1" parent="0"/>
@@ -93,15 +93,6 @@
                         </Array>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="41" value="1" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fontSize=17;fillColor=#99CCFF;fontColor=#000000;fontStyle=1" parent="1" vertex="1">
-                    <mxGeometry x="-7" y="473" width="30" height="30" as="geometry"/>
-                </mxCell>
-                <mxCell id="42" value="2" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fontSize=17;fillColor=#99CCFF;fontColor=#000000;fontStyle=1" parent="1" vertex="1">
-                    <mxGeometry x="263" y="467" width="30" height="30" as="geometry"/>
-                </mxCell>
-                <mxCell id="44" value="3" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fontSize=17;fillColor=#99CCFF;fontColor=#000000;fontStyle=1" parent="1" vertex="1">
-                    <mxGeometry x="382" y="289" width="30" height="30" as="geometry"/>
-                </mxCell>
                 <mxCell id="46" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=none;" vertex="1" parent="1">
                     <mxGeometry x="858" y="374" width="402" height="306" as="geometry"/>
                 </mxCell>
@@ -125,12 +116,6 @@
                 </mxCell>
                 <mxCell id="59" value="Azure Redis&lt;br&gt;Cache&lt;br&gt;Private Endpoint" style="aspect=fixed;html=1;points=[];align=center;image;fontSize=12;image=img/lib/azure2/networking/Private_Endpoint.svg;" vertex="1" parent="1">
                     <mxGeometry x="1039" y="484.5" width="54.55" height="50" as="geometry"/>
-                </mxCell>
-                <mxCell id="65" value="5" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fontSize=17;fillColor=#99CCFF;fontColor=#000000;fontStyle=1" vertex="1" parent="1">
-                    <mxGeometry x="856" y="166" width="30" height="30" as="geometry"/>
-                </mxCell>
-                <mxCell id="68" value="5" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fontSize=17;fillColor=#99CCFF;fontColor=#000000;fontStyle=1" vertex="1" parent="1">
-                    <mxGeometry x="-7" y="523" width="30" height="30" as="geometry"/>
                 </mxCell>
             </root>
         </mxGraphModel>

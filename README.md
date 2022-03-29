@@ -8,19 +8,25 @@
 
 # Introduction
 
-The purpose of this demo is to illustrate a common setup leveraging App Service Environment v3 with an hub and multiple spokes.
+The purpose of this demo is to illustrate a common setup leveraging App Service Environment v3 (ASE) with an hub and multiple spokes.
 
-The App Service Environment will be of type internal, all ingress will be thru Azure Application Gateway with WAF and all egress thru the Azure Firewall.
+The App Service Environment will be of type internal, all ingress will be going into Azure Application Gateway and all egress thru the Azure Firewall when they need to consume other resources from other spokes.
 
 # Architecture
 
 This diagram illustrate the architecture for this demo repository.  The networking topology used it's [hub and spoke](https://docs.microsoft.com/en-us/azure/architecture/reference-architectures/hybrid-networking/hub-spoke?tabs=cli).
 
-All ingress traffic from the Internet is coming thru the Application Gateway and filtered using a Web Application Firewall.
-
-All egress traffic is passing thru Azure Firewall before going back to the internet.
-
 <img src=https://raw.githubusercontent.com/hugogirard/asev3enterpriseDemo/main/diagram/architecture.png />
+
+Here you have two APIs hosted in the ASE, the Weather API doesn't consume any other Azure Resources and doesn't egress thru the internet.  
+
+The fibonacci will calculate a [fibonacci number](https://en.wikipedia.org/wiki/Fibonacci_number) based on a len passed in parameter.
+
+Before calculating the sequence the API will validate if the result is present in an Azure Redis Cache.  If it's the case no calculation will be done at the API level and the cached result will be returned.
+
+If the sequence is not present in the cache it will be calculated and saved in the cache for future reference. 
+
+When retrieving/writting values from the cache all traffic will goes thru the Azure Firewall.  **Both spokes are not peered and all the traffic between spoke flow thru the Azure Firewall.**
 
 # Prerequisites
 

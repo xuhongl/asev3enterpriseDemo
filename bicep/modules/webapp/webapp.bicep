@@ -15,7 +15,7 @@ resource cache 'Microsoft.Cache/redis@2021-06-01' existing = {
 
 //var cacheCnxString = listKey(cacheId, cacheApiVersion).primaryKey
 
-var cacheCnxString = '${cacheName}.windows.net:6380,password=${cache.listKeys().primaryKey},ssl=True,abortConnect=False'
+var cacheCnxString = '${cacheName}.redis.cache.windows.net:6380,password=${cache.listKeys().primaryKey},ssl=True,abortConnect=False'
 
 resource weatherApi 'Microsoft.Web/sites@2021-03-01' = {
   name: 'weatherapi-${suffix}'
