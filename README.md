@@ -20,7 +20,7 @@ All ingress traffic from the Internet is coming thru the Application Gateway and
 
 All egress traffic is passing thru Azure Firewall before going back to the internet.
 
-<img src=https://raw.githubusercontent.com/hugogirard/asev3enterpriseDemo/main/diagram/architecture.svg />
+<img src=https://raw.githubusercontent.com/hugogirard/asev3enterpriseDemo/main/diagram/architecture.png />
 
 # Prerequisites
 
