@@ -111,14 +111,14 @@ module peeringhub 'modules/networking/peering.bicep' = {
   }
 }
 
-// module peeringspokeASE 'modules/networking/peering.bicep' = {
-//   scope: resourceGroup(spokeAseRg.name)
-//   name: 'peeringspokeASE'
-//   params: {
-//     peeringName: '${vnetSpoke.outputs.vnetName}/spoke-to-hub'
-//     remoteVnetId: vnetHub.outputs.vnetId
-//   }
-// }
+module peeringspokeASE 'modules/networking/peering.bicep' = {
+  scope: resourceGroup(spokeAseRg.name)
+  name: 'peeringspokeASE'
+  params: {
+    peeringName: '${vnetSpoke.outputs.vnetName}/spoke-to-hub'
+    remoteVnetId: vnetHub.outputs.vnetId
+  }
+}
 
 // module peeringspokeDB 'modules/networking/peering.bicep' = {
 //   scope: resourceGroup(spokeDBRg.name)
