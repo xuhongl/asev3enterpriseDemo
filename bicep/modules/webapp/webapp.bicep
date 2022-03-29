@@ -4,9 +4,14 @@ param appServiceId string
 param aseId string
 param aseName string
 
-param cacheId string
-param cacheApiVersion string
+param cacheName string
+param cacheResourceGroup string
 
+
+resource cache 'Microsoft.Cache/redis@2021-06-01' existing = {
+  name: cacheName
+  scope: resourceGroup(cacheResourceGroup)
+}
 
 //var cacheCnxString = listKey(cacheId, cacheApiVersion).primaryKey
 
@@ -35,7 +40,7 @@ resource fibonacciApi 'Microsoft.Web/sites@2021-03-01' = {
       appSettings: [
         {
           name: 'RedisCnxString'
-          value: cacheCnxString
+          value: cache.listKeys().primaryKey
         }
       ]
     }      

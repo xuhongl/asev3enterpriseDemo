@@ -173,8 +173,8 @@ module web 'modules/webapp/webapp.bicep' = {
     aseId: ase.outputs.aseId
     location: location
     suffix: spokeAseSuffix
-    cacheApiVersion: cache.outputs.cacheApiVersion
-    cacheId: cache.outputs.id
+    cacheName: cache.outputs.cacheName
+    cacheResourceGroup: spokeDBRg.name
   }
 }
 
