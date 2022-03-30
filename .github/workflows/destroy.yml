@@ -37,3 +37,20 @@ jobs:
 
       - run: |
           az group delete --name ${{ env.RG_NAME }} --no-wait -y          
+          
+  destroy-spoke-db:
+    
+    env:      
+      RG_NAME: rg-spoke-db-demo
+
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - name: Azure Login
+        uses: Azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - run: |
+          az group delete --name ${{ env.RG_NAME }} --no-wait -y                
