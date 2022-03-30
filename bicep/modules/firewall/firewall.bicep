@@ -49,49 +49,7 @@ resource firewallPolicies 'Microsoft.Network/firewallPolicies@2021-05-01' = {
 //   }
 // }
 
-resource ruleCollectionGroups 'Microsoft.Network/firewallPolicies/ruleCollectionGroups@2021-05-01' = {
-  name: '${firewallPolicies.name}/DefaultNetworkRuleCollectionGroup'  
-  properties: {
-    priority: 200
-    ruleCollections: [
-      {
-        ruleCollectionType: 'FirewallPolicyFilterRuleCollection'
-        action: {
-          type: 'Allow'
-        }
-        priority: 100
-        rules: [
-          {            
-            ruleType: 'NetworkRule'
-            name: 'toPrivateSpokeDB'            
-            ipProtocols: [
-              'Any'
-            ]
-            sourceAddresses: [
-              subnetASECIDR
-            ]
-            sourceIpGroups: [
-              
-            ]
-            destinationAddresses: [
-              subnetSpokeDBCIDR
-            ]
-            destinationIpGroups: [
-              
-            ]
-            destinationFqdns: [
-              
-            ]
-            destinationPorts: [
-              '*'
-            ]
-          }
-        ]
-      }
-    ]
-  }
 
-}
 
 resource firewall 'Microsoft.Network/azureFirewalls@2021-05-01' = {
   name: 'fw-${suffix}'
