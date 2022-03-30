@@ -5,6 +5,9 @@
   - [Run the Powershell script](#run-the-powershell-script)
 - [Create the environment](#create-the-environment)
   - [Get the base64 encoded value of your certificate](#get-the-base64-encoded-value-of-your-certificate)
+  - [Create Github Secrets](#create-github-secrets)
+  - [Run Create Azure Resources GitHub Action](#run-create-azure-resources-gitHub-action)
+  - []
 
 # Introduction
 
@@ -122,36 +125,24 @@ Now you can go to the Actions tab and Run the Create Azure Resources [GitHub Act
 
 This GitHub Action can take up to 3 hours to run.  Once is completed you should have 3 resources groups created in Azure.
 
-
-
 ## Configure the Github Runner
 
 Because the Application Service Environment is of type internal, you will need to deploy the APIs using [GitHub Self Runner](https://docs.github.com/en/actions/hosting-your-own-runners/about-self-hosted-runners).
 
-Connect to VM created in the resource group and follow the installation procedure.
+Connect to VM created in the resource group **rg-hub-ase-demo** and follow the installation procedure.
 
-If you want to run the runner agent as a service (recommended) follow this [link](https://docs.github.com/en/actions/hosting-your-own-runners/configuring-the-self-hosted-runner-application-as-a-service) after the installation.
+If you want to run the runner agent as a service (recommended) follows this [link](https://docs.github.com/en/actions/hosting-your-own-runners/configuring-the-self-hosted-runner-application-as-a-service) after the installation.
 
-<!-- # asev3enterpriseDemo
-Github with ASEv3 implemented Enterprise edition
+## Run Deploys Apis GitHub Action
 
-# Associate Route Table
-Associate route table to subnet
+Now you need to execute the **Deploy Apis** GitHub action.  This will deploy the two apis in the ASE.
 
-# Create DNAT rule 
+## Run Create Application Gateway GitHub Action
 
-| Source | Port | Protocol | Destination | Translated Address | Translated Port | Action |
-|--------|------|----------|-------------|--------------------|-----------------|--------|
-*|443|TCP| Public Firewall IP | Public External ASE IP | 443 | Dnat
+Once the apis are deployed, you can now create the Application Gateway to receive the ingress traffic.  To do so, execute the Create Application Gateway GitHub Action.
 
-# Add in your DNS those entries
+One is completed, you will need to configure the public IP of the Application Gateway to your public domain for the two apis.
 
-If you modify you Windows Host go to
+In the previous step, you created two secrets for the custom domain of both API.
 
-c:\windows\system32\drivers\etc\hosts
-
-You will need to add something like this, the public IP represent your firewall IP
-
-#20.121.185.68 helloworldhg2.asehgtest.p.azurewebsites.net
-#20.121.185.68 helloworldhg2.scm.asehgtest.p.azurewebsites.net
-#20.121.185.68 asehgtest.scm.p.azurewebsites.net -->
+For example, let say my public IP of the Application Gateway is 20.100.0.0, in your public domain DNS you will need to create two A record entry associate to the two custom domain defined in the GitHub secrets.
