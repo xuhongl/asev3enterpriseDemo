@@ -7,7 +7,11 @@
   - [Get the base64 encoded value of your certificate](#get-the-base64-encoded-value-of-your-certificate)
   - [Create Github Secrets](#create-github-secrets)
   - [Run Create Azure Resources GitHub Action](#run-create-azure-resources-gitHub-action)
-  - []
+  - [Configure the firewall rules](#configure-the-firewall-rules)
+  - [Configure the Github Runner](#configure-the-github-runner)
+  - [Run Deploys Apis GitHub Action](#run-deploys-apis-gitHub-action)
+  - [Run Create Application Gateway GitHub Action](#run-create-application-gateway-gitHub-action)
+  - [Test the apis](#test-the-apis)
 
 # Introduction
 
@@ -19,7 +23,7 @@ The App Service Environment will be of type internal, all ingress will be going 
 
 This diagram illustrates the architecture for this demo repository.  The networking topology used its [hub and spoke](https://docs.microsoft.com/en-us/azure/architecture/reference-architectures/hybrid-networking/hub-spoke?tabs=cli).
 
-<img src=https://raw.githubusercontent.com/hugogirard/asev3enterpriseDemo/main/pictures/architecture.png/>
+<img src=https://raw.githubusercontent.com/hugogirard/asev3enterpriseDemo/main/pictures/architecture.png />
 
 Here you have two APIs hosted in the ASE, the Weather API doesn't consume any other Azure Resources and doesn't egress thru the firewall.  
 
@@ -131,6 +135,32 @@ This GitHub Action can take up to 3 hours to run.  Once is completed you should 
   <li>rg-spoke-db-demo</li>
 </ul>
 
+## Configure the firewall rules
+
+Once all resources are created, you will need to configure the **firewall policy**.  
+
+You will see this resource in the resource group called **rg-hub-ase-demo**.  Click on it and click on Network rules.
+
+<img src='https://raw.githubusercontent.com/hugogirard/asev3enterpriseDemo/main/pictures/firewall network rule.png' />
+
+Click on Add a rule collection.
+
+<img src='https://raw.githubusercontent.com/hugogirard/asev3enterpriseDemo/main/pictures/addrule.png' />
+
+You will need to configure a rule that look like this.
+
+<img src='https://raw.githubusercontent.com/hugogirard/asev3enterpriseDemo/main/pictures/rule collection fw.png' >
+
+What is important here is the Source and Destination.
+
+The Source will be equal to the subnet CIDR that you can find in the vnet-spoke for the snet-ase subnet.
+
+<img src='https://raw.githubusercontent.com/hugogirard/asev3enterpriseDemo/main/pictures/vnet-spoke.png' />
+
+The destination will be equal to the subnet CIDR that you can find in the vnet-spoke-db for the snet-prvEndpoint.
+
+<img src='https://raw.githubusercontent.com/hugogirard/asev3enterpriseDemo/main/pictures/vnet-spoke-db.png' />
+
 ## Configure the Github Runner
 
 Because the Application Service Environment is of type internal, you will need to deploy the APIs using [GitHub Self Runner](https://docs.github.com/en/actions/hosting-your-own-runners/about-self-hosted-runners).
@@ -151,8 +181,32 @@ One is completed, you will need to configure the public IP of the Application Ga
 
 You can find the Public IP of Application Gateway in the Azure Portal.
 
-
+<img src='https://raw.githubusercontent.com/hugogirard/asev3enterpriseDemo/main/pictures/ipappgw.png'>
 
 In the previous step, you created two secrets for the custom domain of both API.
 
-For example, let say my public IP of the Application Gateway is 20.100.0.0, in your public domain DNS you will need to create two A record entry associate to the two custom domain defined in the GitHub secrets.
+You will need to configure those two entries in your DNS Server, here for example we are using Azure Public DNS Zone.
+
+<img src='https://raw.githubusercontent.com/hugogirard/asev3enterpriseDemo/main/pictures/DNS.png'>
+
+## Test the apis
+
+Now you should be able to test the weatherapi, to test it open a browser and enter this URL (replace weatherapi.hugogirard.net with your custom domain).
+
+<img src='https://raw.githubusercontent.com/hugogirard/asev3enterpriseDemo/main/pictures/weatherapi.png' />
+
+Do the same for the fibonacci api.
+
+<img src='https://raw.githubusercontent.com/hugogirard/asev3enterpriseDemo/main/pictures/fibonacci.png' />
+
+To test you can reach the redis cache execute the getSequence with a len of 5.
+
+<img src='https://raw.githubusercontent.com/hugogirard/asev3enterpriseDemo/main/pictures/notcached.png' />
+
+You will see in the JSON result the **property valueFromCache** returning false.
+
+Execute the API again.
+
+<img src='https://raw.githubusercontent.com/hugogirard/asev3enterpriseDemo/main/pictures/cached.png' />
+
+The property **valueFromCache** will return true.
