@@ -19,7 +19,7 @@ The App Service Environment will be of type internal, all ingress will be going 
 
 This diagram illustrates the architecture for this demo repository.  The networking topology used its [hub and spoke](https://docs.microsoft.com/en-us/azure/architecture/reference-architectures/hybrid-networking/hub-spoke?tabs=cli).
 
-<img src=https://raw.githubusercontent.com/hugogirard/asev3enterpriseDemo/main/diagram/architecture.png />
+<img src=https://raw.githubusercontent.com/hugogirard/asev3enterpriseDemo/main/pictures/architecture.png/>
 
 Here you have two APIs hosted in the ASE, the Weather API doesn't consume any other Azure Resources and doesn't egress thru the firewall.  
 
@@ -125,6 +125,12 @@ Now you can go to the Actions tab and Run the Create Azure Resources [GitHub Act
 
 This GitHub Action can take up to 3 hours to run.  Once is completed you should have 3 resources groups created in Azure.
 
+<ul>
+  <li>rh-hub-ase-demo</li>
+  <li>rg-spoke-ase-demo</li>  
+  <li>rg-spoke-db-demo</li>
+</ul>
+
 ## Configure the Github Runner
 
 Because the Application Service Environment is of type internal, you will need to deploy the APIs using [GitHub Self Runner](https://docs.github.com/en/actions/hosting-your-own-runners/about-self-hosted-runners).
@@ -142,6 +148,10 @@ Now you need to execute the **Deploy Apis** GitHub action.  This will deploy the
 Once the apis are deployed, you can now create the Application Gateway to receive the ingress traffic.  To do so, execute the Create Application Gateway GitHub Action.
 
 One is completed, you will need to configure the public IP of the Application Gateway to your public domain for the two apis.
+
+You can find the Public IP of Application Gateway in the Azure Portal.
+
+
 
 In the previous step, you created two secrets for the custom domain of both API.
 
