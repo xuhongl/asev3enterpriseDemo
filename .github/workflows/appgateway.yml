@@ -39,14 +39,7 @@ jobs:
           customDomainWeatherApiFQDN: ${{ secrets.CUSTOM_DOMAIN_WEATHER_API }}
           fibonacciApiFQDN: ${{ secrets.WEBAPP_FIBONACCI_FQDN }}
           customDomainFibonacciApiFQDN: ${{ secrets.CUSTOM_DOMAIN_FIBONACCI_API }}
-          
-      - name: Upload a Build Artifact
-        uses: actions/upload-artifact@v3.0.0
-        with:
-          # Artifact name
-          name: gateway.parameters.json
-          path: bicep/gateway.parameters.json
-  
+            
       - name: deploy
         id: createResources
         uses: azure/arm-deploy@v1
