@@ -8,7 +8,7 @@ env:
   AZURE_WEBAPP_PACKAGE_PATH: package
   AZURE_WEBAPP_NAME: FibonacciApi1
   
-  
+jobs: 
  build-deploy-fibonacci-api:
 
     runs-on: self-hosted
